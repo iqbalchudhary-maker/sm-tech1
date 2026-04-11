@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Table for storing AI Agent leads
+model ClientLead {
+  id                 Int      @id @default(autoincrement())
+  name               String?
+  email              String?
+  phone              String?
+  projectType        String?  // e.g., Web, AI, App
+  budget             String?
+  message            String   @db.Text
+  chatHistory        Json?    // Poori conversation save karne ke liye
+  status             String   @default("New") // New, Contacted, Completed
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("client_leads")
+}
+
+// Optional: Admin User for Dashboard login
+model Admin {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+}
