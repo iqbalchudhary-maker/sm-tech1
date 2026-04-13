@@ -39,6 +39,18 @@ const carouselProjects = [
 export default function Hero() {
   const [index, setIndex] = useState(0);
 
+  // --- SERVICE LIST SCHEMA (SEO ENHANCEMENT) ---
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": carouselProjects.map((p, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "name": p.title,
+      "description": p.desc
+    }))
+  };
+
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % carouselProjects.length);
@@ -50,6 +62,11 @@ export default function Hero() {
 
   return (
     <section id="home" className="h-[calc(100vh-70px)] flex items-center justify-center px-4 max-w-7xl mx-auto overflow-hidden">
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
       
       <div className="relative h-[85%] w-full perspective-[2000px]">
         
@@ -64,10 +81,11 @@ export default function Hero() {
           >
             <Image
               src={carouselProjects[index].img}
-              alt={carouselProjects[index].title}
+              alt={`${carouselProjects[index].title} - SM Tech AI Solutions`}
               fill
               className="object-cover brightness-[0.7] transition-transform duration-6000ms scale-105 group-hover:scale-100"
               priority
+              sizes="(max-width: 768px) 100vw, 1200px"
             />
 
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 bg-black/40">
@@ -79,13 +97,12 @@ export default function Hero() {
                 className="space-y-4 max-w-4xl"
               >
                 <span className="px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-400 text-[9px] font-bold uppercase tracking-[0.3em]">
-                  Featured Innovation
+                  SM Tech | 20 Years of Tech Excellence
                 </span>
 
-                {/* Heading Updated: Font weight changed from font-black to font-bold and size adjusted */}
-                <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.2] uppercase">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.2] uppercase">
                   {carouselProjects[index].title}
-                </h2>
+                </h1>
 
                 <p className="text-sm md:text-base text-slate-200 font-light max-w-xl mx-auto leading-relaxed">
                   {carouselProjects[index].desc}
@@ -97,6 +114,7 @@ export default function Hero() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-3 px-8 py-3 bg-white text-black font-semibold text-xs rounded-full hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-xl active:scale-95"
+                    title="Book AI Consultation with SM Tech"
                   >
                     BOOK AN APPOINTMENT
                   </a>
@@ -115,8 +133,8 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="absolute -top-10 -left-10 w-64 h-64 bg-blue-600/5 blur-[100px] rounded-full"></div>
-        <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-cyan-600/5 blur-[100px] rounded-full"></div>
+        <div className="absolute -top-10 -left-10 w-64 h-64 bg-blue-600/5 blur-[100px] rounded-full pointer-events-none"></div>
+        <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-cyan-600/5 blur-[100px] rounded-full pointer-events-none"></div>
       </div>
 
     </section>

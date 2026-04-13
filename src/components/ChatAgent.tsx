@@ -9,7 +9,20 @@ export default function ChatAgent() {
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // 1. Load Chat History from LocalStorage
+  // --- JSON-LD FOR CHAT AGENT ---
+  const chatSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "AI Customer Support",
+    "provider": {
+      "@type": "ProfessionalService",
+      "name": "SM Tech",
+      "url": "https://sm-tech.com",
+      "logo": "https://sm-tech.com/logo.png"
+    },
+    "description": "24/7 AI Strategist Agent for Enterprise Automation and Full Stack Solutions."
+  };
+
   useEffect(() => {
     const savedChat = localStorage.getItem('sm_tech_expert_chat');
     if (savedChat) {
@@ -19,7 +32,6 @@ export default function ChatAgent() {
     }
   }, []);
 
-  // 2. Auto-save and Auto-scroll
   useEffect(() => {
     if (messages.length > 0) {
       localStorage.setItem('sm_tech_expert_chat', JSON.stringify(messages));
@@ -62,11 +74,17 @@ export default function ChatAgent() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[1000] font-sans">
+    // Suggesion applied: z-[9999] -> z-9999
+    <div className="fixed bottom-6 right-6 z-9999 font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(chatSchema) }}
+      />
+
       {!isOpen && (
         <button 
           onClick={() => setIsOpen(true)}
-          className="bg-blue-600 text-white p-4 rounded-2xl shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:scale-105 transition-all flex items-center gap-2 group"
+          className="bg-blue-600 text-white p-4 rounded-2xl shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:scale-105 transition-all flex items-center gap-2 group border border-white/10"
         >
           <div className="bg-white/20 p-1 rounded-lg"><Sparkles size={20} /></div>
           <span className="font-bold pr-2 text-sm uppercase tracking-wider">Talk to Expert</span>
@@ -74,100 +92,68 @@ export default function ChatAgent() {
       )}
 
       {isOpen && (
-        /* responsive height fixed: max-h added */
-        <div className="bg-white w-[350px] sm:w-[380px] h-[600px] max-h-[85vh] shadow-[0_30px_100px_rgba(0,0,0,0.2)] rounded-[32px] flex flex-col border border-slate-200 overflow-hidden transition-all animate-in slide-in-from-bottom-5">
+        // Suggestions applied: sm:w-95, h-137.5, rounded-4xl
+        <div className="bg-white w-[90vw] sm:w-95 h-137.5 max-h-[80vh] shadow-[0_30px_100px_rgba(0,0,0,0.3)] rounded-4xl flex flex-col border border-slate-200 overflow-hidden transition-all animate-in slide-in-from-bottom-5">
           
-          {/* Header Section */}
-          <div className="bg-slate-900 p-5 text-white relative z-[1001]">
+          <div className="bg-slate-900 p-5 text-white">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/50">
                   <Bot size={22} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm tracking-tight">SM TECHNOLOGY</h3>
+                  <h3 className="font-bold text-sm tracking-tight uppercase">SM Tech Expert</h3>
                   <div className="flex items-center gap-1.5">
                     <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Expert Agent</span>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Always Online</span>
                   </div>
                 </div>
               </div>
               
               <div className="flex items-center gap-1">
-                <button 
-                  onClick={clearChat} 
-                  title="Clear Chat"
-                  className="text-slate-400 hover:text-red-400 transition-colors p-2 hover:bg-white/5 rounded-lg"
-                >
+                <button onClick={clearChat} className="text-slate-400 hover:text-red-400 transition-colors p-2 rounded-lg">
                   <Trash2 size={18}/>
                 </button>
-                
-                {/* Minimize Button (Cross) */}
-                <button 
-                  onClick={() => setIsOpen(false)} 
-                  title="Minimize"
-                  className="text-slate-400 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg border border-white/10"
-                >
+                <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-white transition-colors p-2 border border-white/10 rounded-lg">
                   <X size={22} strokeWidth={2.5} />
                 </button>
               </div>
             </div>
           </div>
           
-          {/* Chat Messaging Area */}
           <div className="flex-1 p-5 overflow-y-auto space-y-6 bg-slate-50/50 scrollbar-hide">
             {messages.map((m, i) => (
-              <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'} gap-3 animate-in fade-in duration-500`}>
+              <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'} gap-3`}>
                 {m.role !== 'user' && (
                   <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shrink-0 shadow-md">
                     <Sparkles size={14} className="text-white" />
                   </div>
                 )}
                 <div className={`max-w-[85%] p-4 rounded-[22px] text-sm leading-relaxed shadow-sm ${
-                  m.role === 'user' 
-                  ? 'bg-blue-600 text-white rounded-tr-none' 
-                  : 'bg-white border border-slate-100 text-slate-700 rounded-tl-none'
+                  m.role === 'user' ? 'bg-blue-600 text-white rounded-tr-none' : 'bg-white border border-slate-100 text-slate-700 rounded-tl-none'
                 }`}>
                   {m.text}
                 </div>
-                {m.role === 'user' && (
-                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center shrink-0">
-                    <User size={14} className="text-white" />
-                  </div>
-                )}
               </div>
             ))}
-            {loading && (
-              <div className="flex gap-3 items-center">
-                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center animate-spin"><Sparkles size={14} className="text-blue-600" /></div>
-                <div className="text-xs text-slate-400 font-bold tracking-widest uppercase animate-pulse">Thinking...</div>
-              </div>
-            )}
+            {loading && <div className="text-xs text-slate-400 animate-pulse">Strategizing...</div>}
             <div ref={scrollRef} />
           </div>
 
-          {/* Input Area */}
-          <div className="p-4 bg-white border-t border-slate-100 relative z-[1001]">
-            <div className="relative flex items-center bg-slate-50 rounded-2xl border border-slate-300 shadow-inner">
+          <div className="p-4 bg-white border-t border-slate-100">
+            <div className="relative flex items-center bg-slate-50 rounded-2xl border border-slate-300">
               <input 
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                placeholder="Type your message..."
-                className="w-full pl-4 pr-12 py-3 bg-transparent focus:outline-none text-slate-800 placeholder:text-slate-400 font-medium text-sm"
-                autoFocus
+                placeholder="Ask about AI Automation..."
+                className="w-full pl-4 pr-12 py-3 bg-transparent focus:outline-none text-slate-800 text-sm"
               />
-              <button 
-                onClick={sendMessage} 
-                className="absolute right-2 bg-blue-600 text-white p-2 rounded-xl hover:bg-blue-700 transition-all shadow-md active:scale-90"
-              >
+              <button onClick={sendMessage} className="absolute right-2 bg-blue-600 text-white p-2 rounded-xl">
                 <Send size={18} />
               </button>
             </div>
-            <p className="text-[10px] text-center text-slate-400 mt-2 font-medium">
-              SM Tech AI Agent can make mistakes.
-            </p>
           </div>
         </div>
       )}

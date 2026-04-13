@@ -46,24 +46,58 @@ export default function Testimonials() {
     }
   ];
 
+  // --- REVIEW & RATING SCHEMA (SEO) ---
+  const testimonialSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "AI Automation & Full-Stack Development",
+    "provider": {
+      "@type": "Organization",
+      "name": "SM Tech"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": feedbacks.length.toString()
+    },
+    "review": feedbacks.map((f) => ({
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": f.name
+      },
+      "reviewBody": f.text,
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      }
+    }))
+  };
+
   return (
     <section 
       id="testimonials" 
       className="py-10 px-4 bg-[#01040f] relative overflow-hidden scroll-mt-24"
     >
+      {/* Structured Data for Search Result Stars */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(testimonialSchema) }}
+      />
+
       <div className="max-w-7xl mx-auto relative z-10">
         
-        {/* Header - Margin aur Space mazeed kam kar di hai */}
+        {/* Header */}
         <div className="text-center mb-8">
           <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter italic">
-            CLIENT <span className="text-blue-600">FEEDBACK</span>
+            SM TECH <span className="text-blue-600">FEEDBACK</span>
           </h2>
           <p className="text-slate-400 text-xs md:text-sm tracking-widest uppercase mt-2">
-            Success stories of business transformation
+            20 Years of Excellence in Business Transformation
           </p>
         </div>
 
-        {/* Feedback Grid - 6 Cards Layout */}
+        {/* Feedback Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {feedbacks.map((f, i) => (
             <div 
@@ -72,7 +106,7 @@ export default function Testimonials() {
             >
               <div>
                 <div className="flex justify-between items-start mb-6">
-                  <div className="flex gap-1 text-amber-400">
+                  <div className="flex gap-1 text-amber-400" aria-label="5 star rating">
                     {[...Array(5)].map((_, star) => (
                       <Star key={star} size={14} fill="currentColor" />
                     ))}
@@ -92,10 +126,10 @@ export default function Testimonials() {
                       <Building2 size={18} />
                    </div>
                    <div>
-                      <h4 className="text-white font-black text-sm uppercase tracking-wider">{f.name}</h4>
-                      <p className="text-green-500 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1">
-                        <Briefcase size={10} /> {f.role}, {f.company}
-                      </p>
+                     <h4 className="text-white font-black text-sm uppercase tracking-wider">{f.name}</h4>
+                     <p className="text-green-500 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1">
+                       <Briefcase size={10} /> {f.role}, {f.company}
+                     </p>
                    </div>
                 </div>
               </div>

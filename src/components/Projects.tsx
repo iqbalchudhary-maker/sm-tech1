@@ -1,3 +1,4 @@
+"use client";
 import Image from 'next/image';
 
 export default function Projects() {
@@ -52,8 +53,40 @@ export default function Projects() {
     }
   ];
 
+  // --- PORTFOLIO & REVIEWS SCHEMA (SEO ENHANCEMENT) ---
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWorkSeries",
+    "name": "SM Tech AI & Development Portfolio",
+    "description": "Showcase of over 450+ successful AI automation and full-stack web projects by SM Tech.",
+    "hasPart": projects.map((p) => ({
+      "@type": "CreativeWork",
+      "name": p.name,
+      "description": p.description,
+      "image": p.image,
+      "author": {
+        "@type": "Organization",
+        "name": "SM Tech"
+      },
+      "review": {
+        "@type": "Review",
+        "reviewBody": p.testimonial,
+        "author": {
+          "@type": "Person",
+          "name": p.client
+        }
+      }
+    }))
+  };
+
   return (
     <section id="projects" className="py-12 px-4 bg-[#01040f] relative overflow-hidden border-t border-white/5 scroll-mt-24">
+      {/* Structured Data for Portfolio Trust */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
+      />
+
       {/* Background Green Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-green-600/5 blur-[120px] rounded-full pointer-events-none"></div>
 
@@ -61,34 +94,35 @@ export default function Projects() {
         {/* Section Header */}
         <div className="text-center mb-10 space-y-4">
           <span className="px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-[10px] font-bold uppercase tracking-widest">
-            Portfolio
+            Portfolio | SM Tech Excellence
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter">
             Completed <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 via-green-600 to-emerald-400">Projects (450+)</span>
           </h2>
           <p className="text-slate-400 text-sm md:text-base max-w-3xl mx-auto leading-relaxed">
-            From custom GPTs to full-scale E-commerce automation, we deliver solutions that <span className="text-white font-semibold underline decoration-green-500">drive real business results.</span>
+            From custom GPTs to full-scale E-commerce automation, SM Tech delivers solutions that <span className="text-white font-semibold underline decoration-green-500">drive real business results.</span>
           </p>
         </div>
 
-        {/* Projects Grid with Green Borders */}
+        {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((p, i) => (
-            <div key={i} className="group relative p-1 bg-linear-to-b from-green-500/40 to-transparent rounded-[48px] transition-all duration-500 hover:scale-[1.02]">
+            <div key={i} className="group relative p-px bg-linear-to-b from-green-500/40 to-transparent rounded-[48px] transition-all duration-500 hover:scale-[1.02]">
               <div className="p-7 bg-slate-950 rounded-[46px] h-full flex flex-col relative overflow-hidden border border-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.05)] group-hover:shadow-[0_0_30px_rgba(34,197,94,0.15)] group-hover:border-green-500/50 transition-all duration-500">
                 
                 {/* --- Project Image --- */}
                 <div className="relative w-full aspect-video mb-6 rounded-4xl overflow-hidden border border-white/5">
                   <Image 
                     src={p.image} 
-                    alt={p.name} 
+                    alt={`${p.name} - AI Solution by SM Tech`} 
                     fill 
                     className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
                     sizes="(max-width: 768px) 100vw, 33vw"
+                    priority={i < 2}
                   />
-                  {/* Floating Action Badge - Green Theme */}
+                  {/* Floating Action Badge */}
                   <div className="absolute bottom-4 left-4 right-4 py-3 px-4 bg-black/40 backdrop-blur-md border border-green-500/20 rounded-2xl opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                    <p className="text-[10px] text-green-300 font-bold uppercase tracking-widest text-center">Built by SM Tech</p>
+                    <p className="text-[10px] text-green-300 font-bold uppercase tracking-widest text-center">Verified SM Tech Project</p>
                   </div>
                 </div>
 

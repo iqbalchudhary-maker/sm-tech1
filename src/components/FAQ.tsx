@@ -10,7 +10,7 @@ interface FAQProps {
 export default function FAQ({ isOpen, onClose }: FAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  if (!isOpen) return null; // Agar open nahi hai to kuch render na kare
+  if (!isOpen) return null;
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -59,14 +59,35 @@ export default function FAQ({ isOpen, onClose }: FAQProps) {
     }
   ];
 
+  // --- FAQ SCHEMA FOR GOOGLE SEARCH RICH RESULTS ---
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((f) => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.a
+      }
+    }))
+  };
+
   return (
     <div className="fixed inset-0 z-999 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl transition-all duration-500">
+      {/* Structured Data Script */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       <div className="relative bg-slate-950 border-2 border-green-500/30 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[40px] p-6 md:p-10 shadow-[0_0_50px_rgba(34,197,94,0.2)]">
         
         {/* Close Button */}
         <button 
           onClick={onClose}
           className="absolute top-6 right-6 p-2 rounded-full bg-white/5 text-slate-400 hover:text-green-400 hover:bg-white/10 transition-all border border-white/10"
+          aria-label="Close FAQ"
         >
           <X size={24} />
         </button>
@@ -74,7 +95,7 @@ export default function FAQ({ isOpen, onClose }: FAQProps) {
         {/* Modal Header */}
         <div className="text-center mb-10 space-y-4">
           <span className="px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-[10px] font-bold uppercase tracking-widest">
-            Support Portal
+            SM TECH AI INSIGHTS
           </span>
           <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter italic">
             STRATEGIC <span className="text-green-500">INSIGHTS</span>
@@ -93,6 +114,7 @@ export default function FAQ({ isOpen, onClose }: FAQProps) {
               <button 
                 onClick={() => toggleFAQ(i)}
                 className="w-full p-5 md:p-6 flex items-center justify-between text-left"
+                aria-expanded={openIndex === i}
               >
                 <div className="flex gap-4 items-center">
                   <div className={`p-2 rounded-lg border transition-colors ${
@@ -127,9 +149,10 @@ export default function FAQ({ isOpen, onClose }: FAQProps) {
           <a 
             href="https://wa.me/923010637955?text=Hello" 
             target="_blank" 
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-green-400 font-bold hover:text-green-300 transition-all text-sm uppercase tracking-widest"
           >
-            <MessageSquare size={16} /> Still have questions? Chat with us
+            <MessageSquare size={16} /> Still have questions? Chat with SM Tech Experts
           </a>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Geist } from "next/font/google";
+import Script from "next/script";
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -11,54 +12,79 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
+// Final Production-Grade Metadata
 export const metadata: Metadata = {
   metadataBase: new URL("https://sm-tech.com"), 
   title: {
-    default: "SM Technology | Enterprise AI Automation & Custom SaaS",
-    template: "%s | SM Technology"
+    default: "SM Tech | 20+ Years Excellence in AI Automation & Full Stack Development",
+    template: "%s | SM Tech"
   },
-  description: "SM Technology specializes in Enterprise AI Agents, RAG Systems, and Custom SaaS solutions. Registered under Partnership Act 1932.",
+  description: "SM Tech provides world-class AI Automation, Custom SaaS, and Enterprise solutions. Expert AI Agents & RAG systems by Ghulam Abbas Bhatti (20+ Years Exp).",
   
-  // Expert Keywords
-  keywords: ["AI Automation", "Enterprise AI", "Custom SaaS", "AI Agents", "RAG Systems", "SM Technology Pakistan"],
+  keywords: [
+    "AI Automation Expert Pakistan", 
+    "Full Stack Web Developer", 
+    "Enterprise AI Agents", 
+    "Custom SaaS Development", 
+    "RAG Systems", 
+    "AI Sales Agents", 
+    "WhatsApp AI Bots",
+    "SM Tech Bhowana"
+  ],
 
-  // --- LOGO & FAVICON PINNING (CRITICAL) ---
-  // Ensure 'smlogof.png' is inside the 'public' folder directly
+  // --- BRANDING & ICONS ---
   icons: {
     icon: [
-      { url: "/smlogof.png", sizes: "32x32" },
-      { url: "/smlogof.png", sizes: "16x16" },
-      { url: "/smlogof.png", sizes: "any" }, // For SVG/PNG pinning
+      { url: "/logo.png", sizes: "32x32" },
+      { url: "/logo.png", sizes: "16x16" },
+      { url: "/logo.png", sizes: "any" },
     ],
-    apple: "/smlogof.png",
-    shortcut: "/smlogof.png",
+    apple: [
+      { url: "/logo.png", sizes: "180x180" }
+    ],
+    shortcut: "/logo.png",
   },
 
-  // Canonical link to prevent duplicate content
+  // Canonical & Robots
   alternates: {
-    canonical: "https://sm-tech.com",
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 
+  // Social Previews (Open Graph)
   openGraph: {
-    title: "SM Technology | Future-Ready AI Solutions",
-    description: "Scale your business with our Enterprise AI Agents and Custom Workflow Automation.",
+    title: "SM Tech | Leading AI Automation & Software House",
+    description: "Transforming businesses with Enterprise-grade AI Agents and Custom Software Solutions. 20 Years of Technical Expertise.",
     url: "https://sm-tech.com",
-    siteName: "SM Technology",
+    siteName: "SM Tech",
     images: [
       {
-        url: "/smlogof.png", // Social preview image
+        url: "/logo.png", 
         width: 1200,
         height: 630,
-        alt: "SM Technology AI Logo",
+        alt: "SM Tech AI Automation Specialist",
       },
     ],
     locale: "en_US",
     type: "website",
   },
 
+  // Twitter Preview
   twitter: {
     card: "summary_large_image",
-    images: ["/smlogof.png"],
+    title: "SM Tech | AI & Full Stack Solutions",
+    description: "Enterprise AI Agents and Custom SaaS built for Scale.",
+    images: ["/logo.png"],
   },
 };
 
@@ -66,25 +92,38 @@ export default function RootLayout({
   children
 }: Readonly<{ children: React.ReactNode }>) {
   
+  // Professional Service & Organization Schema
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "SM Technology",
+    "@type": "ProfessionalService",
+    "name": "SM Tech",
+    "image": "https://sm-tech.com/logo.png",
+    "@id": "https://sm-tech.com",
     "url": "https://sm-tech.com",
-    "logo": "https://sm-tech.com/smlogof.png",
-    "legalName": "SM Technology (Registered Partnership)",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+923010637955",
-      "contactType": "Sales"
-    }
+    "telephone": "+923010637955",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Kalri Bypass Road",
+      "addressLocality": "Bhowana",
+      "addressRegion": "Punjab",
+      "addressCountry": "PK"
+    },
+    "description": "Expert AI Automation and Full Stack Development services with 20 years of experience.",
+    "founder": {
+      "@type": "Person",
+      "name": "Ghulam Abbas Bhatti"
+    },
+    "serviceType": ["AI Automation", "Web Development", "SaaS Solutions"]
   };
 
   return (
     <html lang="en" className={`scroll-smooth ${geist.variable}`}>
       <head>
-        {/* Manual link tag for older browsers to ensure icon shows */}
-        <link rel="icon" href="/smlogof.png" />
+        {/* Favicon fallback for older browsers */}
+        <link rel="icon" href="/logo.png" sizes="any" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+        
+        {/* Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

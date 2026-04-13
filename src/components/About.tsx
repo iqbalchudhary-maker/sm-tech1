@@ -1,9 +1,47 @@
 import { ShieldCheck, Briefcase, Globe, Award } from 'lucide-react';
+import type { Metadata } from "next";
+
+// 1. Page-Specific Metadata for SEO
+export const metadata: Metadata = {
+  title: "About Us | SM Tech - 20 Years of AI & Tech Expertise",
+  description: "Learn about SM Tech, a registered AI Automation Agency since 2019. Founded by Ghulam Abbas Bhatti with 20+ years of full-stack experience.",
+  keywords: ["AI Automation Agency", "SM Tech Registration", "Ghulam Abbas Bhatti", "Partnership Act 1932 Tech Company", "Bhowana AI Experts"],
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About SM Tech | Innovation Meets Automation",
+    description: "Registered & Trusted AI Solutions since 2019. 450+ Global Projects Completed.",
+    images: [{ url: "/logo.png" }],
+  },
+};
 
 export default function About() {
+  // 2. JSON-LD for Professional Service & Registration Details
+  const aboutSchema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "mainEntity": {
+      "@type": "ProfessionalService",
+      "name": "SM Tech",
+      "legalName": "SM Technology (Registered Partnership)",
+      "foundingDate": "2019-12-03",
+      "registrationNumber": "2747",
+      "description": "Premier AI Automation Agency and Web Development firm dedicated to driving Digital Transformation.",
+      "knowsAbout": ["AI Automation", "Software Engineering", "Enterprise AI Agents", "RAG Systems"],
+      "award": "450+ Global Projects Completed"
+    }
+  };
+
   return (
     <section id="about" className="py-10 bg-[#01040f] border-y border-white/5 px-4 relative overflow-hidden">
       
+      {/* Structured Data Script */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }}
+      />
+
       {/* Background Decorative Glow */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-green-500/5 blur-[120px] rounded-full pointer-events-none"></div>
 

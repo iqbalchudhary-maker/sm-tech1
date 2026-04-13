@@ -47,8 +47,38 @@ export default function Services() {
     }
   ];
 
+  // --- SERVICE & PROFESSIONAL SCHEMA (SEO) ---
+  const servicesSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "SM Tech AI & Automation Services",
+    "description": "Professional AI automation, agentic workflows, and full-stack development services by SM Tech with 20 years of expertise.",
+    "itemListElement": services.map((s, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "item": {
+        "@type": "Service",
+        "name": s.title,
+        "description": s.desc,
+        "provider": {
+          "@type": "Organization",
+          "name": "SM Tech",
+          "url": "https://sm-tech.com"
+        },
+        "areaServed": "Global",
+        "serviceType": "AI Automation & Digital Transformation"
+      }
+    }))
+  };
+
   return (
     <section id="services" className="py-12 px-4 bg-[#01040f] relative overflow-hidden border-t border-white/5">
+      {/* Structured Data for Service Indexing */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesSchema) }}
+      />
+
       {/* Dynamic Background Glow */}
       <div className="absolute top-1/4 right-0 w-80 h-80 bg-green-600/5 blur-[120px] rounded-full pointer-events-none"></div>
       
@@ -56,13 +86,13 @@ export default function Services() {
         {/* Section Header */}
         <div className="text-center mb-16 space-y-4">
           <span className="px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-[10px] font-bold uppercase tracking-widest">
-            Capabilities & Solutions
+            SM Tech Capabilities & Solutions
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter">
             Architecting the <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 via-green-600 to-emerald-400">Future of Work</span>
           </h2>
           <p className="text-slate-400 text-sm md:text-base max-w-3xl mx-auto leading-relaxed border-l-2 border-green-600/50 pl-6 italic">
-            “We engineer high-performance autonomous systems that transform operational costs into exponential revenue growth.”
+            “At SM Tech, we engineer high-performance autonomous systems that transform operational costs into exponential revenue growth.”
           </p>
         </div>
 

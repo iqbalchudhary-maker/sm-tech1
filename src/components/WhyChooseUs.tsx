@@ -27,14 +27,48 @@ export default function WhyChooseUs() {
     { title: "Priority Support", desc: "Direct access to our senior engineers for life-time help.", icon: <LifeBuoy className="text-green-400" /> },
   ];
 
+  // --- BUSINESS VALUE & OFFERS SCHEMA (SEO) ---
+  const valueSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Why Choose SM Tech for AI Automation",
+    "description": "Discover why SM Tech is the leader in AI automation with 20 years of experience and 450+ completed projects.",
+    "mainEntity": {
+      "@type": "Service",
+      "name": "SM Tech Professional AI Services",
+      "offers": {
+        "@type": "Offer",
+        "name": "Free AI Strategy Call",
+        "description": "Book a free session to scale your business with autonomous AI agents."
+      },
+      "provider": {
+        "@type": "ProfessionalService",
+        "name": "SM Tech",
+        "image": "/logo.png",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Bhowana",
+          "addressCountry": "PK"
+        }
+      }
+    }
+  };
+
   return (
     <section id="why-us" className="py-12 px-4 bg-[#01040f] relative overflow-hidden border-t border-white/5 scroll-mt-24">
+      {/* Schema Injection for Business Trust */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(valueSchema) }}
+      />
       
       {/* Interactive Blink Button */}
       <div className={`fixed top-10 left-1/2 -translate-x-1/2 z-50 transition-all duration-1000 ${showBlink ? 'opacity-100' : 'opacity-0'}`}>
         <button 
           onClick={() => document.getElementById('why-us')?.scrollIntoView({ behavior: 'smooth' })}
           className="bg-green-600 text-white px-8 py-3 rounded-full text-xs font-black uppercase tracking-[0.2em] animate-pulse shadow-[0_0_30px_rgba(34,197,94,0.6)] flex items-center gap-2 border border-green-400/50"
+          aria-label="Unlock Growth with SM Tech"
         >
           <MousePointerClick size={16} /> Click Me: Unlock Your Growth
         </button>
@@ -42,10 +76,10 @@ export default function WhyChooseUs() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         
-        {/* Header - Spacing Kam Kar di gayi hai */}
+        {/* Header */}
         <div className="text-center mb-5 space-y-3">
           <span className="px-4 py-1.5 rounded-full border border-green-500/20 bg-green-500/5 text-green-400 text-[9px] font-bold uppercase tracking-[0.3em]">
-            Experience Excellence
+            SM Tech: Experience Excellence
           </span>
           <h2 className="text-3xl md:text-4xl font-black text-white tracking-tighter italic">
             DOMINATE YOUR NICHE WITH <br/>
@@ -56,7 +90,7 @@ export default function WhyChooseUs() {
           </p>
         </div>
 
-        {/* Benefits Grid - Green Neon Borders Added */}
+        {/* Benefits Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-16">
           {characteristics.map((item, index) => (
             <div 
@@ -82,11 +116,11 @@ export default function WhyChooseUs() {
             <div className="space-y-3 text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-2 text-green-500">
                 <Award size={18} />
-                <span className="text-[10px] font-black uppercase tracking-widest">Global Expertise</span>
+                <span className="text-[10px] font-black uppercase tracking-widest">Global AI Expertise by SM Tech</span>
               </div>
               <h3 className="text-2xl md:text-3xl font-black text-white leading-tight">
                 Stop Burning Cash. <br/>
-                Start <span className="text-green-500">Scaling with AI.</span>
+                Start <span className="text-green-500">Scaling with SM Tech AI.</span>
               </h3>
               <p className="text-slate-400 text-xs max-w-md">
                 Get premium AI services with one click. Our team ensures 100% efficiency while you focus on vision.
@@ -95,16 +129,16 @@ export default function WhyChooseUs() {
 
             <div className="flex flex-col items-center gap-4">
                <div className="flex -space-x-3 mb-1">
-                  {[1,2,3,4].map(i => (
-                    <div key={i} className="w-9 h-9 rounded-full border-2 border-slate-950 bg-slate-800 flex items-center justify-center text-[9px] text-white font-bold">
-                      {i === 4 ? "+20" : "Exp"}
-                    </div>
-                  ))}
+                 {[1,2,3,4].map(i => (
+                   <div key={i} className="w-9 h-9 rounded-full border-2 border-slate-950 bg-slate-800 flex items-center justify-center text-[9px] text-white font-bold">
+                     {i === 4 ? "+20" : "20y"}
+                   </div>
+                 ))}
                </div>
                <button className="px-8 py-4 bg-green-600 text-white text-xs font-black rounded-2xl hover:bg-green-700 transition-all shadow-[0_15px_40px_rgba(34,197,94,0.3)] hover:-translate-y-1">
                  BOOK A FREE STRATEGY CALL
                </button>
-               <p className="text-[9px] text-slate-500 uppercase tracking-widest font-bold">Trusted by 450+ Clients</p>
+               <p className="text-[9px] text-slate-500 uppercase tracking-widest font-bold">Trusted by 450+ Global Clients</p>
             </div>
           </div>
         </div>

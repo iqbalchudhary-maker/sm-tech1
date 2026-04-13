@@ -3,25 +3,58 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { HelpCircle } from 'lucide-react';
-import FAQ from './FAQ'; // Path check karlein
+import FAQ from './FAQ'; 
 
 export default function Footer() {
   const [isFaqOpen, setIsFaqOpen] = useState(false);
 
+  // --- LOCAL BUSINESS & CONTACT SCHEMA (SEO ENHANCEMENT) ---
+  const footerSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "SM Tech",
+    "url": "https://sm-tech.com",
+    "logo": "https://sm-tech.com/logo.png",
+    "legalName": "SM Technology (Registered Partnership)",
+    "foundingDate": "2019-12-03",
+    "registrationNumber": "2747",
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "telephone": "+923010637955",
+        "contactType": "customer service",
+        "areaServed": ["PK", "AE"],
+        "availableLanguage": ["English", "Urdu"]
+      }
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Office No. 9, 2nd Floor, Shoukat Plaza, Temple Road",
+      "addressLocality": "Lahore",
+      "addressCountry": "PK"
+    }
+  };
+
   return (
     <footer className="bg-slate-50 border-t border-slate-200 pt-20 pb-10 px-4 relative overflow-hidden">
+      {/* Structured Data for Search Engines */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(footerSchema) }}
+      />
+
       {/* Decorative background glow - Subtle Green */}
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-green-100/50 blur-[100px] rounded-full pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         
-        {/* --- FAQ Trigger Section (Bada Icon on White Theme) --- */}
+        {/* --- FAQ Trigger Section --- */}
         <div className="flex flex-col items-center justify-center mb-20">
            <button 
              onClick={() => setIsFaqOpen(true)}
              className="group relative flex flex-col items-center gap-4 transition-all"
+             aria-label="Open SM Tech Knowledge Hub"
            >
-             {/* Subtle Glow for White Background */}
              <div className="absolute inset-0 bg-green-500/10 blur-3xl rounded-full group-hover:bg-green-500/20 transition-all"></div>
              
              <div className="relative w-20 h-20 bg-white border-2 border-green-500/30 rounded-full flex items-center justify-center group-hover:border-green-500 group-hover:scale-110 shadow-lg group-hover:shadow-green-200/50 transition-all duration-500">
@@ -39,9 +72,9 @@ export default function Footer() {
           <div className="space-y-6">
             <div className="flex items-center gap-2">
                <div className="w-8 h-8 relative">
-                  <Image src="/smlogof.png" alt="Logo" fill className="object-contain" />
+                  <Image src="/logo.png" alt="SM Tech Logo" fill className="object-contain" priority />
                </div>
-               <h3 className="text-xl font-bold text-slate-900 tracking-tighter">SM TECHNOLOGY</h3>
+               <h3 className="text-xl font-bold text-slate-900 tracking-tighter uppercase">SM Technology</h3>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed font-medium">
               Premier AI Automation Agency. Architecting smart systems for global growth. 
@@ -101,8 +134,8 @@ export default function Footer() {
             © 2026 SM Technology. All Rights Reserved.
           </p>
           <div className="flex gap-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-            <Link href="#" className="hover:text-green-600">Privacy Policy</Link>
-            <Link href="#" className="hover:text-green-600">Terms of Service</Link>
+            <Link href="/privacy" className="hover:text-green-600">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-green-600">Terms of Service</Link>
           </div>
         </div>
       </div>

@@ -7,17 +7,51 @@ import { ChevronDown, MessageCircle } from 'lucide-react';
 export default function Navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
 
+  // --- SITE NAVIGATION SCHEMA (SEO) ---
+  const navSchema = {
+    "@context": "https://schema.org",
+    "@type": "SiteNavigationElement",
+    "name": [
+      "Home", "About", "Why Us", "Solutions", "Management", "Projects", "Reviews"
+    ],
+    "url": [
+      "https://sm-tech.com/",
+      "https://sm-tech.com/#about",
+      "https://sm-tech.com/#why-us",
+      "https://sm-tech.com/#services",
+      "https://sm-tech.com/#management",
+      "https://sm-tech.com/#projects",
+      "https://sm-tech.com/#testimonials"
+    ]
+  };
+
+  const navLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '#about' },
+    { name: 'Why Us', href: '#why-us' },
+    { name: 'Solutions', href: '#services' },
+    { name: 'Management', href: '#management' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Reviews', href: '#testimonials' },
+  ];
+
   return (
     <nav className="fixed top-0 w-full z-100 bg-[#020617]/70 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
+      {/* Structured Data for Navigation */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(navSchema) }}
+      />
+
       <div className="max-w-7xl mx-auto px-4 h-24 flex items-center justify-between gap-2">
         
         {/* --- Logo & Name --- */}
-        <Link href="/" className="flex items-center gap-3 shrink-0">
+        <Link href="/" className="flex items-center gap-3 shrink-0" aria-label="SM Technology Home">
           <div className="relative w-12 h-12 md:w-14 md:h-14 p-0.75 rounded-xl bg-linear-to-tr from-blue-600 to-cyan-400 animate-[spin_12s_linear_infinite] group-hover:animate-[spin_6s_linear_infinite] transition-all">
               <div className="w-full h-full bg-[#020617] rounded-[9px] flex items-center justify-center overflow-hidden">
                 <Image 
-                  src="/smlogof.png" 
-                  alt="SM Tech Logo"
+                  src="/logo.png" 
+                  alt="SM Technology - Leading AI Automation Agency"
                   width={56}
                   height={56}
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -36,17 +70,9 @@ export default function Navbar() {
         </Link>
         
         {/* --- Navigation Links --- */}
-        <div className="hidden lg:flex items-center flex-1 justify-center px-4">
+        <div className="hidden lg:flex items-center flex-1 justify-center px-4" role="navigation">
           <div className="flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/5">
-            {[
-              { name: 'Home', href: '/' },
-              { name: 'About', href: '#about' },
-              { name: 'Why Us', href: '#why-us' },
-              { name: 'Solutions', href: '#services' },
-              { name: 'Management', href: '#management' },
-              { name: 'Projects', href: '#projects' },
-              { name: 'Reviews', href: '#testimonials' },
-            ].map((link) => (
+            {navLinks.map((link) => (
               <Link 
                 key={link.name}
                 href={link.href} 
@@ -72,6 +98,8 @@ export default function Navbar() {
             <button 
               onClick={() => setShowDropdown(!showDropdown)}
               onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+              aria-haspopup="true"
+              aria-expanded={showDropdown}
               className="relative inline-flex items-center gap-2 px-5 md:px-7 py-2.5 md:py-3 overflow-hidden font-bold text-white transition-all duration-300 bg-blue-600 rounded-full group hover:bg-blue-700 shadow-[0_0_20px_rgba(37,99,235,0.3)] shrink-0"
             >
               <span className="relative text-xs md:text-sm whitespace-nowrap">Contact Us</span>
@@ -86,6 +114,7 @@ export default function Navbar() {
                 <Link 
                   href="https://wa.me/971558245432" 
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-between px-5 py-4 hover:bg-white/5 transition-colors group/item"
                 >
                   <div className="flex flex-col text-left">
@@ -101,6 +130,7 @@ export default function Navbar() {
                 <Link 
                   href="https://wa.me/923010637955" 
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-between px-5 py-4 hover:bg-white/5 transition-colors group/item"
                 >
                   <div className="flex flex-col text-left">
