@@ -7,13 +7,10 @@ import { ChevronDown, MessageCircle } from 'lucide-react';
 export default function Navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
 
-  // --- SITE NAVIGATION SCHEMA (SEO) ---
   const navSchema = {
     "@context": "https://schema.org",
     "@type": "SiteNavigationElement",
-    "name": [
-      "Home", "About", "Why Us", "Solutions", "Management", "Projects", "Reviews"
-    ],
+    "name": ["Home", "About", "Why Us", "Solutions", "Management", "Projects", "Reviews"],
     "url": [
       "https://sm-tech.com/",
       "https://sm-tech.com/#about",
@@ -36,22 +33,21 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-100 bg-[#020617]/70 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
-      {/* Structured Data for Navigation */}
+    /* Fix 1: z-[100] ko z-100 kar diya (Tailwind v4 suggestion) */
+    <nav className="fixed top-0 w-full z-100 bg-white/90 backdrop-blur-xl border-b border-black/5 transition-all duration-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(navSchema) }}
       />
 
       <div className="max-w-7xl mx-auto px-4 h-24 flex items-center justify-between gap-2">
-        
-        {/* --- Logo & Name --- */}
         <Link href="/" className="flex items-center gap-3 shrink-0" aria-label="SM Technology Home">
+          {/* Fix 2: bg-gradient-to-tr ko bg-linear-to-tr kar diya */}
           <div className="relative w-12 h-12 md:w-14 md:h-14 p-0.75 rounded-xl bg-linear-to-tr from-blue-600 to-cyan-400 animate-[spin_12s_linear_infinite] group-hover:animate-[spin_6s_linear_infinite] transition-all">
               <div className="w-full h-full bg-[#020617] rounded-[9px] flex items-center justify-center overflow-hidden">
                 <Image 
                   src="/logo.png" 
-                  alt="SM Technology - Leading AI Automation Agency"
+                  alt="SM Technology"
                   width={56}
                   height={56}
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -60,23 +56,22 @@ export default function Navbar() {
               </div>
           </div>
           <div className="flex flex-col shrink-0">
-            <span className="font-black text-lg md:text-xl lg:text-2xl tracking-[-0.05em] text-white leading-none">
+            <span className="font-black text-lg md:text-xl lg:text-2xl tracking-[-0.05em] text-slate-900 leading-none">
               SM TECHNOLOGY
             </span>
-            <span className="text-[9px] md:text-[11px] text-blue-500 font-bold tracking-[0.2em] uppercase mt-1">
+            <span className="text-[9px] md:text-[11px] text-blue-600 font-bold tracking-[0.2em] uppercase mt-1">
               AI Automation Agency
             </span>
           </div>
         </Link>
         
-        {/* --- Navigation Links --- */}
         <div className="hidden lg:flex items-center flex-1 justify-center px-4" role="navigation">
-          <div className="flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/5">
+          <div className="flex items-center gap-1 bg-black/5 p-1 rounded-full border border-black/5">
             {navLinks.map((link) => (
               <Link 
                 key={link.name}
                 href={link.href} 
-                className="px-3 xl:px-4 py-2 text-[11px] xl:text-[13px] font-semibold text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 whitespace-nowrap"
+                className="px-3 xl:px-4 py-2 text-[11px] xl:text-[13px] font-semibold text-slate-600 hover:text-blue-600 hover:bg-white rounded-full transition-all duration-300 whitespace-nowrap shadow-sm hover:shadow-md"
               >
                 {link.name}
               </Link>
@@ -84,66 +79,50 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* --- Action Buttons with Dropdown --- */}
         <div className="flex items-center gap-3 md:gap-5 shrink-0">
-          <Link 
-            href="/dashboard" 
-            className="hidden xl:block text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-blue-500 transition-colors"
-          >
-            Dashboard
-          </Link>
-
-          {/* --- Dropdown Container --- */}
           <div className="relative">
             <button 
               onClick={() => setShowDropdown(!showDropdown)}
               onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-              aria-haspopup="true"
-              aria-expanded={showDropdown}
               className="relative inline-flex items-center gap-2 px-5 md:px-7 py-2.5 md:py-3 overflow-hidden font-bold text-white transition-all duration-300 bg-blue-600 rounded-full group hover:bg-blue-700 shadow-[0_0_20px_rgba(37,99,235,0.3)] shrink-0"
             >
               <span className="relative text-xs md:text-sm whitespace-nowrap">Contact Us</span>
               <ChevronDown size={16} className={`transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} />
             </button>
 
-            {/* --- Dropdown Menu --- */}
             {showDropdown && (
-              <div className="absolute right-0 mt-3 w-56 bg-slate-900 border border-white/10 rounded-2xl overflow-hidden shadow-2xl z-50 animate-in fade-in slide-in-from-top-2">
-                
-                {/* UAE Office Link */}
+              <div className="absolute right-0 mt-3 w-56 bg-white border border-black/5 rounded-2xl overflow-hidden shadow-2xl z-50 animate-in fade-in slide-in-from-top-2">
                 <Link 
                   href="https://wa.me/971558245432" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between px-5 py-4 hover:bg-white/5 transition-colors group/item"
+                  className="flex items-center justify-between px-5 py-4 hover:bg-blue-50 transition-colors group/item"
                 >
                   <div className="flex flex-col text-left">
-                    <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest">UAE Office</span>
-                    <span className="text-xs text-white font-medium">Dubai Support</span>
+                    <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">UAE Office</span>
+                    <span className="text-xs text-slate-700 font-medium">Dubai Support</span>
                   </div>
-                  <MessageCircle size={16} className="text-slate-500 group-hover/item:text-green-500 transition-colors" />
+                  <MessageCircle size={16} className="text-slate-400 group-hover/item:text-green-500 transition-colors" />
                 </Link>
 
-                <div className="h-px bg-white/5 w-full"></div>
+                <div className="h-px bg-black/5 w-full"></div>
 
-                {/* Pakistan Head Office Link */}
                 <Link 
                   href="https://wa.me/923010637955" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between px-5 py-4 hover:bg-white/5 transition-colors group/item"
+                  className="flex items-center justify-between px-5 py-4 hover:bg-blue-50 transition-colors group/item"
                 >
                   <div className="flex flex-col text-left">
-                    <span className="text-[10px] font-black text-green-500 uppercase tracking-widest">Head Office</span>
-                    <span className="text-xs text-white font-medium">Pakistan Support</span>
+                    <span className="text-[10px] font-black text-green-600 uppercase tracking-widest">Head Office</span>
+                    <span className="text-xs text-slate-700 font-medium">Pakistan Support</span>
                   </div>
-                  <MessageCircle size={16} className="text-slate-500 group-hover/item:text-green-500 transition-colors" />
+                  <MessageCircle size={16} className="text-slate-400 group-hover/item:text-green-500 transition-colors" />
                 </Link>
               </div>
             )}
           </div>
         </div>
-
       </div>
     </nav>
   );
