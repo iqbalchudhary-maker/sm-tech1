@@ -86,7 +86,7 @@ export default function Navbar() {
               onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
               className="relative inline-flex items-center gap-2 px-5 md:px-7 py-2.5 md:py-3 overflow-hidden font-bold text-white transition-all duration-300 bg-blue-600 rounded-full group hover:bg-blue-700 shadow-[0_0_20px_rgba(37,99,235,0.3)] shrink-0"
             >
-              <span className="relative text-xs md:text-sm whitespace-nowrap">Contact Us</span>
+              <span className="relative text-xs md:text-sm whitespace-nowrap">Get Free Ai Audit</span>
               <ChevronDown size={16} className={`transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} />
             </button>
 
