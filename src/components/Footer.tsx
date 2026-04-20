@@ -36,7 +36,14 @@ export default function Footer() {
           <div className="space-y-6">
             <div className="flex items-center gap-3">
                <div className="w-10 h-10 relative">
-                  <Image src="/logo.png" alt="SM Tech Logo" fill className="object-contain" priority />
+                  <Image 
+                                    src="/logo.png" 
+                                    alt="SM Technology"
+                                    width={56}
+                                    height={56}
+                                    className="object-contain group-hover:scale-110 transition-transform duration-700"
+                                    priority
+                                  />
                </div>
                <h3 className="text-xl font-bold tracking-tighter uppercase">SM Technology</h3>
             </div>

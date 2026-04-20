@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import About from '@/components/About';
 import Hero from '@/components/Hero';
+import AgenticWorkflows from "@/components/AgenticWorkflows"; 
 import Management from '@/components/Management';
 import Services from '@/components/Services';
 import Projects from '@/components/Projects';
@@ -10,22 +11,22 @@ import WhyChooseUs from '@/components/WhyChooseUs';
 import Testimonials from '@/components/Testimonials'; 
 import ChatAgent from '@/components/ChatAgent';
 
-// 1. --- VIEWPORT EXPORT (New Next.js Standard) ---
+// 1. --- VIEWPORT EXPORT ---
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#020617', // Optional: Browser bar color matching your theme
+  themeColor: '#020617',
 };
 
-// 2. --- METADATA EXPORT (Viewport removed from here) ---
+// 2. --- METADATA EXPORT ---
 export const metadata: Metadata = {
   title: 'SM Tech | AI Automation Expert & Full Stack Developer (20+ Years Exp)',
   description: 'SM Tech specializes in Autonomous AI Agents, Enterprise Automation (n8n/Make), and High-Performance Web Apps. Scaling businesses with 20 years of technical excellence.',
   keywords: ['AI Automation Expert', 'Full Stack Developer Pakistan', 'SM Tech', 'n8n Automation', 'WhatsApp AI Bots', 'Custom AI Solutions'],
-  authors: [{ name: 'SM Tech', url: 'https://sm-tech.com' }],
+  authors: [{ name: 'SM Tech', url: 'https://www.smtechaisolutions.com' }], 
   robots: 'index, follow',
   alternates: {
-    canonical: 'https://sm-tech.com',
+    canonical: 'https://www.smtechaisolutions.com',
   },
   icons: {
     icon: '/logo.png',
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'SM Tech | Leading AI Automation & Digital Transformation',
     description: 'Transforming operational costs into revenue with 450+ completed AI & Web projects.',
-    url: 'https://sm-tech.com',
+    url: 'https://www.smtechaisolutions.com',
     siteName: 'SM Tech',
     images: [
       {
@@ -61,9 +62,9 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "SM Tech",
-    "image": "https://sm-tech.com/logo.png",
-    "@id": "https://sm-tech.com",
-    "url": "https://sm-tech.com",
+    "image": "https://www.smtechaisolutions.com/logo.png",
+    "@id": "https://www.smtechaisolutions.com",
+    "url": "https://www.smtechaisolutions.com",
     "telephone": "", 
     "priceRange": "$$",
     "address": {
@@ -100,7 +101,6 @@ export default function Home() {
 
   return (
     <main className="bg-[#020617] text-white min-h-screen selection:bg-green-500/30">
-      {/* Structured Data for Google Bots */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -108,16 +108,21 @@ export default function Home() {
 
       <Navbar />
 
-      {/* --- About Section --- */}
-      <div id="about" className="pt-24"> 
-        <About />
-      </div>
-
       <div className="flex flex-col">
-        {/* --- Hero Section --- */}
-        <section id="home">
+        {/* --- Hero Section: Top par impact ke liye (Padding Adjust ki gayi) --- */}
+        <section id="home" className="pt-10 md:pt-16">
           <Hero />
         </section>
+
+        {/* --- About Section: Trust building (Padding thori kam ki gayi) --- */}
+        <div id="about" className="py-8 md:py-12"> 
+          <About />
+        </div>
+
+        {/* --- Agentic Workflows: Technical capability --- */}
+        <div id="agentic-workflows">
+          <AgenticWorkflows />
+        </div>
 
         <Management />
 

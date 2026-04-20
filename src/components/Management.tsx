@@ -15,20 +15,19 @@ export default function Management() {
       img: "/abbass.png", 
       value: "Empowering local enterprises with high-efficiency R&D and future-proof digital infrastructure."
     },
-     { 
-  name: "Miss Fabiha Zanib", 
-  role: "Head of Client Success", 
-  img: "/fatima.jpeg",
-  value: "Bridging the gap between complex AI logic and business impact to ensure every client achieves 10x ROI."
-},
-  
+    { 
+      name: "Miss Fabiha Zanib", 
+      role: "Head of Client Success", 
+      img: "/fatima.jpeg",
+      value: "Bridging the gap between complex AI logic and business impact to ensure every client achieves 10x ROI."
+    },
     { 
       name: "Miss Samina Bukhari", 
       role: "Technical Team Manager", 
       img: "/samina.jpeg",
       value: "Optimizing project timelines and delivery speed to get your products to market faster than ever."
     },
-      { 
+    { 
       name: "Miss Rifat Ismail", 
       role: "Head of Technical Excellence", 
       img: "/rifat.jpeg",
@@ -42,7 +41,6 @@ export default function Management() {
     }
   ];
 
-  // --- LEADERSHIP & ORGANIZATION SCHEMA (SEO) ---
   const teamSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -65,26 +63,32 @@ export default function Management() {
 
   return (
     <section id="management" className="py-24 px-4 bg-[#01040f] relative overflow-hidden">
-      {/* Structured Data for Leadership Trust */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(teamSchema) }}
       />
 
-      {/* Background Decorative Elements */}
       <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-green-500/50 to-transparent"></div>
       <div className="absolute -top-24 -left-24 w-96 h-96 bg-green-600/5 blur-[120px] rounded-full"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-10 space-y-6">
-          <span className="px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest">
+        {/* --- REFINED SECTION HEADER --- */}
+        <div className="text-center mb-20 space-y-10"> {/* Increased spacing between elements */}
+          
+          {/* Enhanced Badge: Increased tracking and glow effect */}
+          <span className="inline-block px-6 py-2 rounded-full border border-green-500/40 bg-green-500/10 text-green-400 text-[10px] font-black uppercase tracking-[0.4em] shadow-[0_0_20px_rgba(34,197,94,0.1)]">
             SM Tech Visionaries
           </span>
-          <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter">
-            Executive <span className="text-transparent bg-clip-text bglinear-to-r from-green-400 via-green-600 to-emerald-400">Leadership</span>
-          </h2>
-          <p className="text-slate-400 text-lg max-w-3xl mx-auto leading-relaxed">
+
+          <div className="flex flex-col items-center justify-center text-center w-full">
+            <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">
+              EXECUTIVE <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 via-green-600 to-emerald-400">LEADERSHIP</span>
+            </h2>
+            <div className="w-24 h-1.5 bg-linear-to-r from-green-500 to-emerald-500 mt-8 rounded-full shadow-[0_0_15px_rgba(34,197,94,0.4)]" />
+          </div>
+
+          {/* Added mt-12 for more padding below the header */}
+          <p className="text-slate-400 text-xl max-w-3xl mx-auto leading-relaxed mt-12">
             Our mission is simple: <span className="text-white font-semibold">Your growth.</span> SM Tech combines 20 years of experience with global expertise to transform your business.
           </p>
         </div>
@@ -93,10 +97,8 @@ export default function Management() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {team.map((m, i) => (
             <div key={i} className="group relative p-px bg-linear-to-b from-green-500/40 to-transparent rounded-[48px] transition-all duration-500 hover:scale-[1.02]">
-              {/* Card Main Container */}
-              <div className="p-8 bg-slate-950 rounded-[46px] h-full flex flex-col relative overflow-hidden border border-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.05)] group-hover:shadow-[0_0_30_rgba(34,197,94,0.15)] group-hover:border-green-500/50 transition-all duration-500">
+              <div className="p-8 bg-slate-950 rounded-[46px] h-full flex flex-col relative overflow-hidden border border-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.05)] group-hover:shadow-[0_0_30px_rgba(34,197,94,0.15)] group-hover:border-green-500/50 transition-all duration-500">
                 
-                {/* --- Image Section --- */}
                 <div className="relative w-full aspect-4/5 mb-8 rounded-4xl overflow-hidden border border-white/5">
                   <Image 
                     src={m.img} 
@@ -106,13 +108,11 @@ export default function Management() {
                     priority={i < 3}
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                  {/* Floating Action Badge */}
                   <div className="absolute bottom-4 left-4 right-4 py-3 px-4 bg-black/40 backdrop-blur-md border border-green-500/20 rounded-2xl opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
                     <p className="text-[10px] text-green-300 font-bold uppercase tracking-widest text-center">AI Strategic Leadership</p>
                   </div>
                 </div>
 
-                {/* --- Content Section --- */}
                 <div className="flex-1 flex flex-col">
                   <h3 className="text-2xl font-extrabold text-white tracking-tight group-hover:text-green-400 transition-colors">
                     {m.name}
@@ -121,7 +121,6 @@ export default function Management() {
                     {m.role}
                   </p>
 
-                  {/* --- Message Section --- */}
                   <div className="pt-6 border-t border-white/5 mt-auto relative">
                     <div className="absolute -top-px left-0 w-12 h-px bg-green-600"></div>
                     <p className="text-slate-300 text-[14px] leading-relaxed font-medium">

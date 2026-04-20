@@ -80,27 +80,32 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="py-12 px-4 bg-[#01040f] relative overflow-hidden border-t border-white/5 scroll-mt-24">
-      {/* Structured Data for Portfolio Trust */}
+    <section id="projects" className="py-24 px-4 bg-[#01040f] relative overflow-hidden border-t border-white/5 scroll-mt-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
       />
 
-      {/* Background Green Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-green-600/5 blur-[120px] rounded-full pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-10 space-y-4">
-          <span className="px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-[10px] font-bold uppercase tracking-widest">
+        
+        {/* --- REFINED SECTION HEADER --- */}
+        <div className="text-center mb-20 space-y-10">
+          
+          <span className="inline-block px-6 py-2 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-[10px] font-black uppercase tracking-[0.4em] shadow-[0_0_20px_rgba(34,197,94,0.1)]">
             Portfolio | SM Tech Excellence
           </span>
-          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter">
-            Completed <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 via-green-600 to-emerald-400">Projects (450+)</span>
-          </h2>
-          <p className="text-slate-400 text-sm md:text-base max-w-3xl mx-auto leading-relaxed">
-            From custom GPTs to full-scale E-commerce automation, SM Tech delivers solutions that <span className="text-white font-semibold underline decoration-green-500">drive real business results.</span>
+
+          <div className="flex flex-col items-center justify-center text-center w-full">
+            <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">
+              COMPLETED <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 via-green-600 to-emerald-400">PROJECTS (450+)</span>
+            </h2>
+            <div className="w-24 h-1.5 bg-linear-to-r from-green-500 to-emerald-500 mt-8 rounded-full shadow-[0_0_15px_rgba(34,197,94,0.4)]" />
+          </div>
+
+          <p className="text-slate-400 text-xl max-w-3xl mx-auto leading-relaxed mt-12 px-4">
+            From custom GPTs to full-scale E-commerce automation, SM Tech delivers solutions that <span className="text-white font-semibold underline decoration-green-500 underline-offset-8">drive real business results.</span>
           </p>
         </div>
 
@@ -110,7 +115,6 @@ export default function Projects() {
             <div key={i} className="group relative p-px bg-linear-to-b from-green-500/40 to-transparent rounded-[48px] transition-all duration-500 hover:scale-[1.02]">
               <div className="p-7 bg-slate-950 rounded-[46px] h-full flex flex-col relative overflow-hidden border border-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.05)] group-hover:shadow-[0_0_30px_rgba(34,197,94,0.15)] group-hover:border-green-500/50 transition-all duration-500">
                 
-                {/* --- Project Image --- */}
                 <div className="relative w-full aspect-video mb-6 rounded-4xl overflow-hidden border border-white/5">
                   <Image 
                     src={p.image} 
@@ -120,13 +124,11 @@ export default function Projects() {
                     sizes="(max-width: 768px) 100vw, 33vw"
                     priority={i < 2}
                   />
-                  {/* Floating Action Badge */}
                   <div className="absolute bottom-4 left-4 right-4 py-3 px-4 bg-black/40 backdrop-blur-md border border-green-500/20 rounded-2xl opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
                     <p className="text-[10px] text-green-300 font-bold uppercase tracking-widest text-center">Verified SM Tech Project</p>
                   </div>
                 </div>
 
-                {/* --- Project Content --- */}
                 <div className="flex-1 flex flex-col">
                   <h3 className="text-2xl font-extrabold text-white tracking-tight group-hover:text-green-400 transition-colors">
                     {p.name}
@@ -135,11 +137,10 @@ export default function Projects() {
                     {p.role}
                   </p>
 
-                  <p className="text-slate-400 text-xs leading-relaxed mb-6">
+                  <p className="text-slate-400 text-[13px] leading-relaxed mb-6">
                     {p.description}
                   </p>
 
-                  {/* --- Testimonial Section --- */}
                   <div className="pt-5 border-t border-white/5 mt-auto relative">
                     <div className="absolute -top-px left-0 w-12 h-px bg-green-600"></div>
                     <p className="text-slate-300 text-[12px] italic leading-relaxed mb-3">
