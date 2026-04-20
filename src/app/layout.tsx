@@ -11,14 +11,15 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-// Final Production-Grade Metadata with High-Demand Keywords
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sm-tech1.vercel.app"), // Deployment ke baad sm-tech.com kar dein
+  // Primary SEO Fix: Domain ko define karna
+  metadataBase: new URL("https://www.smtechaisolutions.com"), 
+  
   title: {
     default: "SM Tech | Expert in Agentic AI, RAG & Full-Stack SaaS",
     template: "%s | SM Tech"
   },
-  description: "Scale your business with Autonomous AI Agents, Custom RAG Architectures, and Enterprise SaaS. 20+ Years expertise in AI Automation by Ghulam Abbas Bhatti.",
+  description: "Scale your business with Autonomous AI Agents, Custom RAG Architectures, and Enterprise SaaS. Expert AI Automation solutions by Ghulam Abbas Bhatti.",
   
   keywords: [
     "Agentic AI Automation Expert", 
@@ -31,23 +32,20 @@ export const metadata: Metadata = {
     "SM Tech Bhowana AI"
   ],
 
-  // --- BRANDING & ICONS ---
   icons: {
     icon: [
       { url: "/logo.png", sizes: "32x32" },
       { url: "/logo.png", sizes: "16x16" },
       { url: "/logo.png", sizes: "any" },
     ],
-    apple: [
-      { url: "/logo.png", sizes: "180x180" }
-    ],
+    apple: [{ url: "/logo.png", sizes: "180x180" }],
     shortcut: "/logo.png",
   },
 
-  // Canonical & Robots
   alternates: {
-    canonical: "/",
+    canonical: "https://www.smtechaisolutions.com",
   },
+
   robots: {
     index: true,
     follow: true,
@@ -60,29 +58,20 @@ export const metadata: Metadata = {
     },
   },
 
-  // Social Previews (WhatsApp, LinkedIn, Facebook)
   openGraph: {
     title: "SM Tech | Agentic AI & Custom SaaS Development",
-    description: "Architecting the Future with Autonomous AI Agents and Private RAG Systems. 20 Years of Full-Stack Excellence for Global Clients.",
-    url: "https://sm-tech1.vercel.app",
+    description: "Architecting the Future with Autonomous AI Agents and Private RAG Systems. 20 Years of Full-Stack Excellence.",
+    url: "https://www.smtechaisolutions.com",
     siteName: "SM Tech",
-    images: [
-      {
-        url: "/logo.png", 
-        width: 1200,
-        height: 630,
-        alt: "SM Tech AI Automation Specialist",
-      },
-    ],
+    images: [{ url: "/logo.png", width: 1200, height: 630, alt: "SM Tech AI Specialist" }],
     locale: "en_US",
     type: "website",
   },
 
-  // Twitter/X Preview
   twitter: {
     card: "summary_large_image",
     title: "SM Tech | Enterprise AI & RAG Solutions",
-    description: "Deploying 24/7 Autonomous AI Agents and High-Performance SaaS. Experience that matters.",
+    description: "Deploying 24/7 Autonomous AI Agents and High-Performance SaaS.",
     images: ["/logo.png"],
   },
 };
@@ -91,14 +80,13 @@ export default function RootLayout({
   children
 }: Readonly<{ children: React.ReactNode }>) {
   
-  // Professional Service & Organization Schema
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "SM Tech",
-    "image": "https://sm-tech1.vercel.app/logo.png",
-    "@id": "https://sm-tech1.vercel.app",
-    "url": "https://sm-tech1.vercel.app",
+    "image": "https://www.smtechaisolutions.com/logo.png",
+    "@id": "https://www.smtechaisolutions.com",
+    "url": "https://www.smtechaisolutions.com",
     "telephone": "+923010637955",
     "address": {
       "@type": "PostalAddress",
@@ -107,17 +95,11 @@ export default function RootLayout({
       "addressRegion": "Punjab",
       "addressCountry": "PK"
     },
-    "description": "Leading AI Automation Agency specializing in Agentic Workflows, RAG Systems, and Full-Stack Development with 20 years of experience.",
+    "description": "Leading AI Automation Agency specializing in Agentic Workflows, RAG Systems, and Full-Stack Development.",
     "founder": {
       "@type": "Person",
       "name": "Ghulam Abbas Bhatti"
-    },
-    "serviceType": [
-      "Agentic AI Automation", 
-      "RAG System Development", 
-      "Enterprise SaaS", 
-      "AI Voice Engineering"
-    ]
+    }
   };
 
   return (
