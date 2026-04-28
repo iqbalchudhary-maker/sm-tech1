@@ -2,11 +2,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronDown, MessageCircle } from 'lucide-react';
+import { Zap } from 'lucide-react'; // Zap icon automation aur agentic feel ke liye
 
 export default function Navbar() {
-  const [showDropdown, setShowDropdown] = useState(false);
-
+  // navSchema aur navLinks same rahen ge...
   const navSchema = {
     "@context": "https://schema.org",
     "@type": "SiteNavigationElement",
@@ -28,7 +27,7 @@ export default function Navbar() {
     { name: 'About', href: '#about' },
     { name: 'Why Us', href: '#why-us' },
     { name: 'Solutions', href: '#services' },
-    { name: 'Workflows', href: '#workflows' }, // Yahan add kar diya takay center mein fit rahay
+    { name: 'Workflows', href: '#workflows' },
     { name: 'Management', href: '#management' },
     { name: 'Projects', href: '#projects' },
     { name: 'Reviews', href: '#testimonials' },
@@ -45,7 +44,7 @@ export default function Navbar() {
         
         {/* --- LOGO SECTION --- */}
         <Link href="/" className="flex items-center gap-2 md:gap-3 shrink-0" aria-label="SM Technology Home">
-          <div className="relative w-10 h-10 md:w-12 md:h-12 p-0.75 rounded-xl bg-linear-to-tr from-blue-600 to-cyan-400 animate-[spin_12s_linear_infinite] group-hover:animate-[spin_6s_linear_infinite] transition-all">
+          <div className="relative w-10 h-10 md:w-12 md:h-12 p-0.75 rounded-xl bg-linear-to-tr from-blue-600 to-cyan-400 animate-[spin_12s_linear_infinite] group">
               <div className="w-full h-full bg-[#020617] rounded-[9px] flex items-center justify-center overflow-hidden">
                 <Image 
                   src="/logo.png" 
@@ -81,50 +80,48 @@ export default function Navbar() {
             ))}
           </div>
         </div>
+{/* --- ULTRA-DYNAMIC AGENTIC AUDIT BUTTON --- */}
+<div className="flex items-center gap-2 shrink-0">
+  <Link 
+    href="https://sm-omini-agent.vercel.app/"
+    target="_blank"
+    className="group relative inline-flex items-center gap-3 px-6 py-3.5 overflow-hidden rounded-full bg-slate-950 font-black text-white transition-all duration-500 hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:shadow-blue-500/40"
+  >
+    {/* 1. Dynamic Rotating Border (Agentic Feel) */}
+    <div className="absolute inset-0 p-[1.5px] rounded-full bg-linear-to-r from-blue-600 via-cyan-400 to-blue-600 opacity-30 group-hover:opacity-100 group-hover:animate-[spin_3s_linear_infinite] transition-opacity"></div>
+    
+    {/* 2. Inner Dark Background to keep text clear */}
+    <div className="absolute inset-[1.5px] bg-[#020617] rounded-full z-0 transition-colors group-hover:bg-blue-950/20"></div>
 
-        {/* --- AUDIT BUTTON SECTION --- */}
-        <div className="flex items-center gap-2 shrink-0">
-          <div className="relative">
-            <button 
-              onClick={() => setShowDropdown(!showDropdown)}
-              onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-              className="relative inline-flex items-center gap-1.5 px-4 md:px-6 py-2.5 md:py-3 overflow-hidden font-bold text-white transition-all duration-300 bg-blue-600 rounded-full group hover:bg-blue-700 shadow-[0_4px_15px_rgba(37,99,235,0.3)] shrink-0"
-            >
-              <span className="relative text-[10px] md:text-xs whitespace-nowrap uppercase tracking-tight">Get Free Ai Audit</span>
-              <ChevronDown size={14} className={`transition-transform duration-300 ${showDropdown ? 'rotate-180' : ''}`} />
-            </button>
+    {/* 3. Scanning Beam Effect */}
+    <div className="absolute inset-0 w-full h-full bg-lineat-to-r from-transparent via-blue-400/10 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] z-0"></div>
 
-            {showDropdown && (
-              <div className="absolute right-0 mt-3 w-56 bg-white border border-black/10 rounded-2xl overflow-hidden shadow-2xl z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                <Link 
-                  href="https://wa.me/971558245432" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between px-5 py-4 hover:bg-blue-50 transition-colors group/item border-b border-black/5"
-                >
-                  <div className="flex flex-col text-left">
-                    <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">UAE Office</span>
-                    <span className="text-xs text-slate-700 font-bold">Dubai Support</span>
-                  </div>
-                  <MessageCircle size={16} className="text-slate-400 group-hover/item:text-green-500 transition-all" />
-                </Link>
+    {/* 4. Agent Icon with Pulse Glow */}
+    <div className="relative z-10 flex items-center justify-center">
+      <div className="absolute inset-0 bg-yellow-400 blur-md opacity-20 group-hover:opacity-60 group-hover:scale-150 transition-all duration-500"></div>
+      <Zap size={16} className="relative text-yellow-300 fill-yellow-300 group-hover:rotate-12 transition-transform duration-300" />
+    </div>
 
-                <Link 
-                  href="https://wa.me/923010637955" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between px-5 py-4 hover:bg-blue-50 transition-colors group/item"
-                >
-                  <div className="flex flex-col text-left">
-                    <span className="text-[10px] font-black text-green-600 uppercase tracking-widest">Head Office</span>
-                    <span className="text-xs text-slate-700 font-bold">Pakistan Support</span>
-                  </div>
-                  <MessageCircle size={16} className="text-slate-400 group-hover/item:text-green-500 transition-all" />
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
+    {/* 5. Button Text */}
+    <span className="relative z-10 text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] italic">
+      GET FREE AI AUDIT
+    </span>
+
+    {/* 6. Live Status Beacon */}
+    <div className="relative z-10 flex h-2 w-2">
+      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+      <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"></span>
+    </div>
+
+    {/* Custom Shimmer Animation Keyframes (Tailwind config mein add na bhi karein toh style tag se chal jayega) */}
+    <style jsx>{`
+      @keyframes shimmer {
+        100% { transform: translateX(100%); }
+      }
+    `}</style>
+  </Link>
+</div>
+
       </div>
     </nav>
   );

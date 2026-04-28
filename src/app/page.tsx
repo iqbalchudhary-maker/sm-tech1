@@ -144,7 +144,9 @@ export default function Home() {
       </div>
 
       <Footer />
-      <ChatAgent />
+      {/* <ChatWidget data={data} /> 
+  Aapne niche wale button ko filhal hide kar diya hai 
+*/}
     </main>
   );
 }
