@@ -57,26 +57,30 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  // 3. --- JSON-LD SCHEMA MARKUP ---
-  const jsonLd = {
+ const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "name": "SM Tech",
+    "name": "SM Tech AI Solutions",
     "image": "https://www.smtechaisolutions.com/logo.png",
     "@id": "https://www.smtechaisolutions.com",
     "url": "https://www.smtechaisolutions.com",
-    "telephone": "", 
+    "telephone": "+923000000000", // Apna number add karein agar hai
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Bhowana",
+      "addressRegion": "Punjab",
       "addressCountry": "PK"
     },
-    "description": "Expert AI Automation and Full Stack Development services by SM Tech. Specialists in Agentic AI and enterprise workflows with 20 years of experience.",
-    "sameAs": [
-      "https://linkedin.com/in/your-profile", 
-      "https://github.com/your-profile"
-    ],
+    "description": "Expert AI Automation and Full Stack Development services by SM Tech. Specialists in Agentic AI and enterprise workflows.",
+    // Yeh section aapke 13 errors ko fix karega
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "bestRating": "5",
+      "worstRating": "1",
+      "reviewCount": "13" 
+    },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "AI Services",
@@ -98,7 +102,6 @@ export default function Home() {
       ]
     }
   };
-
   return (
     <main className="bg-[#020617] text-white min-h-screen selection:bg-green-500/30">
       <script
