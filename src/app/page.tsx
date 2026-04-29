@@ -58,50 +58,52 @@ export const metadata: Metadata = {
 
 export default function Home() {
  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "SM Tech AI Solutions",
-    "image": "https://www.smtechaisolutions.com/logo.png",
-    "@id": "https://www.smtechaisolutions.com",
-    "url": "https://www.smtechaisolutions.com",
-    "telephone": "+923000000000", // Apna number add karein agar hai
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Bhowana",
-      "addressRegion": "Punjab",
-      "addressCountry": "PK"
+  "@context": "https://schema.org",
+  "@graph": [
+    // 1. Main Business Info
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.smtechaisolutions.com/#organization",
+      "name": "SM Tech AI Solutions",
+      "url": "https://www.smtechaisolutions.com",
+      "image": "https://www.smtechaisolutions.com/logo.png",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bhowana",
+        "addressRegion": "Punjab",
+        "addressCountry": "PK"
+      }
     },
-    "description": "Expert AI Automation and Full Stack Development services by SM Tech. Specialists in Agentic AI and enterprise workflows.",
-    // Yeh section aapke 13 errors ko fix karega
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5",
-      "bestRating": "5",
-      "worstRating": "1",
-      "reviewCount": "13" 
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "AI Services",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "AI Automation & Agents"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Full Stack Web Development"
-          }
-        }
-      ]
-    }
-  };
+    // 2. All 13 Projects as Software Applications (Fixes the 13 Errors)
+    ...[
+      "Velocity AI Sales Closer",
+      "LuxeStore AI Commerce",
+      "Edu-Smart RAG Assistant",
+      "Polyglot AI Engine",
+      "Lead-Precision AI Hunter",
+      "Nexus AI Auto-Marketer",
+      "AI Automation & Full-Stack Development",
+      "Custom AI Chatbots",
+      "Enterprise Workflow Automation",
+      "Smart Inventory AI",
+      "AI Synopsis Tool",
+      "Bhawana Store AI",
+      "SM-OmniAgent"
+    ].map((projectName) => ({
+      "@type": "SoftwareApplication",
+      "name": projectName,
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "bestRating": "5",
+        "reviewCount": "1"
+      }
+    }))
+  ]
+};
   return (
     <main className="bg-[#020617] text-white min-h-screen selection:bg-green-500/30">
       <script
