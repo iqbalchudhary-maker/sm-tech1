@@ -3,6 +3,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { Search } from "lucide-react"; // Install lucide-react if not present
 
+export const dynamic = "force-dynamic";
 export default async function BlogMainPage() {
   const posts = await prisma.post.findMany({
     orderBy: { createdAt: "desc" },
