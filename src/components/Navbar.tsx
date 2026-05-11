@@ -22,16 +22,17 @@ export default function Navbar() {
     ]
   };
 
-  const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '#about' },
-    { name: 'Why Us', href: '#why-us' },
-    { name: 'Solutions', href: '#services' },
-    { name: 'Workflows', href: '#workflows' },
-    { name: 'Management', href: '#management' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Reviews', href: '#testimonials' },
-  ];
+const navLinks = [
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '#about' },
+  { name: 'Why Us', href: '#why-us' },
+  { name: 'Solutions', href: '#services' },
+  { name: 'Workflows', href: '#workflows' },
+  { name: 'Management', href: '#management' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'Reviews', href: '#testimonials' },
+  { name: "Research & Publications", href: "/blog", isSpecial: true }, 
+];
 
   return (
     <nav className="fixed top-0 w-full z-100 bg-white/95 backdrop-blur-xl border-b border-black/5 transition-all duration-300">

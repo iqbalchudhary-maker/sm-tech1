@@ -23,4 +23,49 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  /* Reset body position to fix the top white space gap */
+  top: 0px !important;
+  position: static !important;
+}
+
+/* --- SM TECH: ULTRA GOOGLE HIDE PROTOCOL --- */
+
+/* 1. Force hide the iframe banner and all translation widgets */
+iframe.goog-te-banner-frame,
+.goog-te-banner-frame,
+.goog-te-banner,
+.skiptranslate,
+#google_translate_element {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+}
+
+/* 2. Disable hover popups (Original text tooltips) */
+#goog-gt-tt, 
+.goog-te-balloon-frame,
+.goog-tooltip,
+.goog-tooltip:hover {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* 3. Remove text highlighting when translated */
+.goog-text-highlight {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* 4. Hide the specific "Powered by Google" branding and dropdowns */
+.goog-te-gadget {
+    display: none !important;
+    font-size: 0 !important;
+    color: transparent !important;
+}
+
+.goog-te-gadget .goog-te-combo {
+    display: none !important;
 }

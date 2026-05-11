@@ -30,3 +30,15 @@ model Admin {
   email    String @unique
   password String
 }
+// Optional: new table for blogs
+model Post {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String   @db.Text
+  image       String   // Vercel Blob URL ya local path
+  category    String   // AI Agents, Web Dev, Automation
+  isTraining  Boolean  @default(false) // Toggle for Education Dept
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
