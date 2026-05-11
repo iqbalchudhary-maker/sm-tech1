@@ -9,17 +9,17 @@ datasource db {
 
 // Table for storing AI Agent leads
 model ClientLead {
-  id                 Int      @id @default(autoincrement())
-  name               String?
-  email              String?
-  phone              String?
-  projectType        String?  // e.g., Web, AI, App
-  budget             String?
-  message            String   @db.Text
-  chatHistory        Json?    // Poori conversation save karne ke liye
-  status             String   @default("New") // New, Contacted, Completed
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  name         String?
+  email        String?
+  phone        String?
+  projectType  String?  // e.g., Web, AI, App
+  budget       String?
+  message      String   @db.Text
+  chatHistory  Json?    // Poori conversation save karne ke liye
+  status       String   @default("New") // New, Contacted, Completed
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@map("client_leads")
 }
@@ -30,6 +30,7 @@ model Admin {
   email    String @unique
   password String
 }
+
 // Optional: new table for blogs
 model Post {
   id          String   @id @default(cuid())
@@ -41,4 +42,6 @@ model Post {
   isTraining  Boolean  @default(false) // Toggle for Education Dept
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@map("Post") 
 }
