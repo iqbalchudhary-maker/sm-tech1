@@ -1,9 +1,7 @@
 "use client";
-
 import { useEffect } from "react";
 
 export default function TranslationButtons() {
-  
   const cleanupGoogleUI = () => {
     if (typeof window !== "undefined") {
       const banner = document.querySelector(".goog-te-banner-frame") as HTMLElement;
@@ -28,37 +26,39 @@ export default function TranslationButtons() {
       if (select) {
         select.value = langCode;
         select.dispatchEvent(new Event('change'));
-        
         setTimeout(cleanupGoogleUI, 100);
-        setTimeout(cleanupGoogleUI, 500);
       }
     }
   };
 
-  // Button class mein 'notranslate' add kar di gayi hai
-  const btnClass = "notranslate py-4 bg-zinc-50 border border-zinc-200 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-zinc-900 hover:text-white transition-all duration-300 flex items-center justify-center text-center";
+  // Buttons style for black background
+  const btnClass = "notranslate py-1.5 px-3 bg-zinc-900 border border-zinc-800 rounded-md text-[8px] font-bold uppercase tracking-wider text-zinc-400 hover:bg-white hover:text-black transition-all duration-300";
 
   return (
-    <div className="max-w-4xl mx-auto px-6 mt-12 mb-6">
-      <div className="flex flex-col items-center">
-        {/* H2 tag mein 'notranslate' add kiya gaya hai taake "Phansi ki zuban" na likha aaye */}
-        <h2 className="notranslate text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400 mb-6 font-sans">
+    /* FIXED NAVBAR (BLACK THEME): 
+       1. 'bg-black' background ko bilkul dark kar dega.
+       2. 'border-zinc-800' ek halki separation line dega.
+    */
+    <nav className="notranslate fixed top-0 left-0 w-full z-[9999] bg-black border-b border-zinc-800 py-3">
+      <div className="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        
+        <span className="text-[8px] font-black uppercase tracking-[0.3em] text-zinc-500">
           Execution Language
-        </h2>
+        </span>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 w-full">
-          <button onClick={() => triggerTranslation('ur')} className={btnClass}>Urdu Mode</button>
-          <button onClick={() => triggerTranslation('hi')} className={btnClass}>Hindi Mode</button>
-          <button onClick={() => triggerTranslation('ar')} className={btnClass}>Arabic Mode</button>
-          <button onClick={() => triggerTranslation('fa')} className={btnClass}>Persian Mode</button>
+        <div className="flex flex-wrap justify-center gap-2">
+          <button onClick={() => triggerTranslation('ur')} className={btnClass}>Urdu</button>
+          <button onClick={() => triggerTranslation('hi')} className={btnClass}>Hindi</button>
+          <button onClick={() => translation('ar')} className={btnClass}>Arabic</button>
+          <button onClick={() => triggerTranslation('fa')} className={btnClass}>Persian</button>
           <button 
             onClick={() => triggerTranslation('en')} 
-            className="notranslate py-4 bg-blue-600 text-white border border-blue-700 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 transition-all duration-300 shadow-lg shadow-blue-200 flex items-center justify-center text-center"
+            className="notranslate py-1.5 px-4 bg-blue-600 text-white rounded-md text-[8px] font-bold uppercase tracking-wider hover:bg-blue-700 shadow-lg shadow-blue-900/20"
           >
-            Default (EN)
+            English
           </button>
         </div>
       </div>
-    </div>
+    </nav>
   );
 }

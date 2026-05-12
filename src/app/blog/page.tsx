@@ -212,15 +212,34 @@ export default async function BlogMainPage() {
           <div className="lg:col-span-5 w-full bg-zinc-900/50 backdrop-blur-sm p-12 rounded-[3rem] border border-zinc-800 shadow-2xl">
             <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.5em] mb-10">● Neural Navigation</p>
             <nav className="space-y-4">
-              {['Client Portal', 'AI Services', 'Staff Access Point'].map((link, i) => (
-                <Link key={i} href="/" className="group flex justify-between items-center py-5 border-b border-zinc-800 hover:border-blue-500 transition-all">
-                  <span className="text-xs font-black text-zinc-300 group-hover:text-white uppercase tracking-widest transition-colors">{link}</span>
-                  <div className="w-8 h-8 rounded-full border border-zinc-700 flex items-center justify-center group-hover:bg-blue-600 transition-all">
-                    <span className="text-sm text-zinc-400 group-hover:text-white">→</span>
-                  </div>
-                </Link>
-              ))}
-            </nav>
+  {[
+    { 
+      name: 'Client Portal', 
+      path: '/portal' // Agar portal ka alag route hai, warna aap ise home pe rakh sakte hain
+    }, 
+    { 
+      name: 'AI Services', 
+      path: '/services' // Sitemap priority (1.0) ke mutabiq ye main page boost karega
+    },
+    { 
+      name: 'Staff Access Point', 
+      path: '/admin/login' // Proper path jo aapke folder structure (app/admin/login) ke mutabiq hai
+    }
+  ].map((link, i) => (
+    <Link 
+      key={i} 
+      href={link.path} 
+      className="group flex justify-between items-center py-5 border-b border-zinc-800 hover:border-blue-500 transition-all"
+    >
+      <span className="text-xs font-black text-zinc-300 group-hover:text-white uppercase tracking-widest transition-colors">
+        {link.name}
+      </span>
+      <div className="w-8 h-8 rounded-full border border-zinc-700 flex items-center justify-center group-hover:bg-blue-600 transition-all">
+        <span className="text-sm text-zinc-400 group-hover:text-white">→</span>
+      </div>
+    </Link>
+  ))}
+</nav>
           </div>
         </div>
       </footer>
