@@ -49,7 +49,7 @@ export default function TranslationButtons() {
         <div className="flex flex-wrap justify-center gap-2">
           <button onClick={() => triggerTranslation('ur')} className={btnClass}>Urdu</button>
           <button onClick={() => triggerTranslation('hi')} className={btnClass}>Hindi</button>
-          <button onClick={() => translation('ar')} className={btnClass}>Arabic</button>
+          <button onClick={() => triggerTranslation('ar')} className={btnClass}>Arabic</button>
           <button onClick={() => triggerTranslation('fa')} className={btnClass}>Persian</button>
           <button 
             onClick={() => triggerTranslation('en')} 
