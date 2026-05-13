@@ -2,13 +2,18 @@
 import React from 'react';
 
 const TranslationButtons = () => {
+  // Button style constants
   const btnClass = "notranslate py-1.5 px-4 bg-zinc-800 text-white rounded-md text-[8px] font-bold uppercase tracking-wider hover:bg-zinc-700 transition-colors";
+  const activeBtnClass = "notranslate py-1.5 px-4 bg-blue-600 text-white rounded-md text-[8px] font-bold uppercase tracking-wider";
 
-  const triggerTranslation = (langCode: string) => {
-    const googleCombo = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-    if (googleCombo) {
-      googleCombo.value = langCode;
-      googleCombo.dispatchEvent(new Event('change'));
+  // Expert Tip: Defining type-safe translation trigger
+  const triggerTranslation = (langCode: string): void => {
+    if (typeof document !== 'undefined') {
+      const googleCombo = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+      if (googleCombo) {
+        googleCombo.value = langCode;
+        googleCombo.dispatchEvent(new Event('change'));
+      }
     }
   };
 
@@ -20,13 +25,14 @@ const TranslationButtons = () => {
         </span>
 
         <div className="flex flex-wrap justify-center gap-2">
-          <button onClick={() => triggerTranslation('ur')} className={btnClass}>Urdu</button>
-          <button onClick={() => triggerTranslation('hi')} className={btnClass}>Hindi</button>
-          <button onClick={() => triggerTranslation('ar')} className={btnClass}>Arabic</button>
-          <button onClick={() => triggerTranslation('fa')} className={btnClass}>Persian</button>
+          <button type="button" onClick={() => triggerTranslation('ur')} className={btnClass}>Urdu</button>
+          <button type="button" onClick={() => triggerTranslation('hi')} className={btnClass}>Hindi</button>
+          <button type="button" onClick={() => triggerTranslation('ar')} className={btnClass}>Arabic</button>
+          <button type="button" onClick={() => triggerTranslation('fa')} className={btnClass}>Persian</button>
           <button 
+            type="button"
             onClick={() => triggerTranslation('en')} 
-            className="notranslate py-1.5 px-4 bg-blue-600 text-white rounded-md text-[8px] font-bold uppercase tracking-wider"
+            className={activeBtnClass}
           >
             English
           </button>
