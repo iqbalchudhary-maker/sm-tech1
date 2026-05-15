@@ -5,20 +5,23 @@ import Link from "next/link";
 import Script from "next/script";
 import TranslationButtons from "./TranslationButtons";
 import { Metadata } from "next";
+import DOMPurify from "isomorphic-dompurify";
 
-// 1. DYNAMIC SEO METADATA - Google search ke liye bohot zarori hai
+// 1. DYNAMIC SEO METADATA
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await prisma.post.findUnique({ where: { slug } });
 
   if (!post) return { title: "Post Not Found | SM Tech" };
 
+  const plainTextContent = post.content ? post.content.replace(/<[^>]*>/g, '') : "";
+
   return {
     title: `${post.title} | SM Tech AI Research`,
-    description: post.content.substring(0, 160), // Content se auto-description
+    description: plainTextContent.substring(0, 160),
     openGraph: {
       title: post.title,
-      description: post.content.substring(0, 160),
+      description: plainTextContent.substring(0, 160),
       url: `https://www.smtechaisolutions.com/blog/${slug}`,
       images: [{ url: post.image || "/hero.png" }],
       type: "article",
@@ -28,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     twitter: {
       card: "summary_large_image",
       title: post.title,
-      description: post.content.substring(0, 160),
+      description: plainTextContent.substring(0, 160),
       images: [post.image || "/hero.png"],
     },
   };
@@ -46,10 +49,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
   if (!post) notFound();
 
-  // 2. JSON-LD ARTICLE SCHEMA - Google Rich Results (News/Articles) ke liye
+  const cleanContent = DOMPurify.sanitize(post.content);
+
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "TechArticle", // Standard Article se behtar hai Tech context mein
+    "@type": "TechArticle",
     "headline": post.title,
     "image": post.image || "https://www.smtechaisolutions.com/hero.png",
     "author": {
@@ -66,7 +70,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       }
     },
     "datePublished": post.createdAt.toISOString(),
-    "description": post.content.substring(0, 200),
+    "description": post.content.replace(/<[^>]*>/g, '').substring(0, 200),
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": `https://www.smtechaisolutions.com/blog/${slug}`
@@ -75,20 +79,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
   return (
     <article className="min-h-screen bg-white">
-      {/* Google SEO Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Google Translate Elements */}
       <div id="google_translate_element" className="hidden opacity-0 invisible absolute -z-50 h-0 w-0"></div>
-      
-      <Script
-        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-        strategy="afterInteractive"
-      />
-      
+      <Script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" strategy="afterInteractive" />
       <Script id="google-translate-config" strategy="afterInteractive">
         {`
           function googleTranslateElementInit() {
@@ -98,25 +95,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               autoDisplay: false,
             }, 'google_translate_element');
           }
-        `}
-      </Script>
-
-      {/* SM TECH BANNER KILLER */}
-      <Script id="google-banner-remover" strategy="afterInteractive">
-        {`
-          (function() {
-            const removeBanner = () => {
-              const banner = document.querySelector(".goog-te-banner-frame");
-              if (banner) banner.style.setProperty('display', 'none', 'important');
-              if (document.body.style.top !== "0px") {
-                document.body.style.setProperty('top', '0px', 'important');
-                document.body.style.setProperty('position', 'static', 'important');
-              }
-            };
-            const observer = new MutationObserver(removeBanner);
-            observer.observe(document.body, { attributes: true, childList: true, subtree: true });
-            setInterval(removeBanner, 500);
-          })();
         `}
       </Script>
 
@@ -145,35 +123,34 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
       {post.image && (
         <div className="max-w-5xl mx-auto mt-10 px-6">
-          <div className="relative h-[350px] md:h-[550px] w-full overflow-hidden rounded-[3rem] shadow-2xl border border-zinc-100">
+          <div className="relative h-87.5 md:h-137.5 w-full overflow-hidden rounded-[3rem] shadow-2xl border border-zinc-100">
+            {/* Optimized sizes for the Main Image */}
             <Image 
               src={post.image} 
-              alt={`SM Tech Research: ${post.title}`} 
+              alt={post.title} 
               fill 
               className="object-cover" 
               priority 
-              sizes="(max-width: 1200px) 100vw, 1200px"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px" 
             />
-            {/* Image Overlay for Premium Feel */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
         </div>
       )}
 
-      {/* Translation Controls */}
       <div className="sticky top-6 z-50 flex justify-center mt-8">
         <TranslationButtons />
       </div>
 
-      {/* 3. MAIN CONTENT - Typography and Readability Optimization */}
       <section className="max-w-3xl mx-auto mt-16 px-6 pb-24">
-        <div className="prose prose-zinc lg:prose-xl max-w-none text-zinc-800 leading-[1.8] whitespace-pre-wrap font-medium translation-content">
-          {post.content}
-        </div>
+        <div 
+          className="prose prose-zinc lg:prose-xl max-w-none text-zinc-800 leading-[1.8] font-medium translation-content
+          prose-img:rounded-[2rem] prose-img:shadow-lg prose-img:my-10
+          prose-strong:text-zinc-900 prose-headings:font-black prose-headings:italic"
+          dangerouslySetInnerHTML={{ __html: cleanContent }}
+        />
         
-        {/* Author Bio Section - Google loves E-E-A-T */}
-        <div className="mt-20 p-8 rounded-[2rem] bg-zinc-50 border border-zinc-100 flex flex-col md:flex-row items-center gap-6">
-          <div className="w-20 h-20 rounded-full bg-zinc-900 flex-shrink-0 flex items-center justify-center text-white font-black text-2xl">AB</div>
+        <div className="mt-20 p-8 rounded-4xl bg-zinc-50 border border-zinc-100 flex flex-col md:flex-row items-center gap-6">
+          <div className="w-20 h-20 rounded-full bg-zinc-900 shrink-0 flex items-center justify-center text-white font-black text-2xl">AB</div>
           <div>
             <p className="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-1">Author</p>
             <h4 className="text-xl font-bold text-zinc-900">Abbas Bhatti</h4>
@@ -182,41 +159,24 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </div>
       </section>
 
-      {/* --- RECOMMENDATIONS --- */}
       <footer className="bg-zinc-900 py-24 px-6 text-white">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-end justify-between mb-16 border-b border-zinc-800 pb-8">
-            <div>
-              <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-blue-500 mb-4">Continue Reading</h3>
-              <p className="text-3xl md:text-5xl font-black uppercase italic tracking-tighter">Deepen Your <span className="text-zinc-500">Knowledge</span></p>
-            </div>
-            <Link href="/blog" className="hidden md:block text-[10px] font-black uppercase border-b border-blue-500 pb-2 hover:text-blue-500 transition">Browse Repository</Link>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {recommendations.map((rec) => (
               <Link href={`/blog/${rec.slug}`} key={rec.id} className="group block">
-                <div className="relative h-64 w-full bg-zinc-800 rounded-[2rem] overflow-hidden mb-6 border border-zinc-800">
-                  {rec.image ? (
+                <div className="relative h-64 w-full bg-zinc-800 rounded-4xl overflow-hidden mb-6">
+                  {rec.image && (
                     <Image 
                       src={rec.image} 
                       alt={rec.title} 
                       fill 
-                      className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100" 
+                      className="object-cover opacity-60 group-hover:opacity-100 transition" 
+                      /* Optimized sizes for recommendation cards */
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-zinc-700 font-black tracking-widest">SM TECH</div>
                   )}
-                  <div className="absolute top-4 left-4">
-                     <span className="px-3 py-1 bg-white/10 backdrop-blur-md text-[8px] font-black uppercase tracking-widest text-white rounded-full border border-white/20">
-                       {rec.category}
-                     </span>
-                  </div>
                 </div>
-                <h4 className="text-xl font-bold leading-tight group-hover:text-blue-400 transition-colors">
-                  {rec.title}
-                </h4>
-                <p className="text-[10px] font-bold text-zinc-500 uppercase mt-4 tracking-widest">Read Article —↗</p>
+                <h4 className="text-xl font-bold group-hover:text-blue-400 transition">{rec.title}</h4>
               </Link>
             ))}
           </div>

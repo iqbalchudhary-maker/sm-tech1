@@ -1,35 +1,44 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { writeFile } from "fs/promises";
+import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 
 export async function POST(req: Request) {
   try {
-    // 1. JSON ke bajaye FormData receive karein
     const formData = await req.formData();
-    
-    const title = formData.get("title") as string;
-    const content = formData.get("content") as string;
-    const category = formData.get("category") as string;
-    const isTraining = formData.get("isTraining") === "true";
-    const file = formData.get("image") as File | null;
+    const file = formData.get("file") as File | null; // Frontend se "file" key aa rahi hai
+    const title = formData.get("title") as string | null;
 
-    let imageUrl = "";
-
-    // 2. Agar file hai, to usey public folder mein save karein
-    if (file) {
-      const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-
-      // File name aur path set karein (Public folder mein)
-      const filename = `${Date.now()}-${file.name.replace(/\s+/g, "-")}`;
-      const filePath = path.join(process.cwd(), "public/uploads", filename);
-      
-      await writeFile(filePath, buffer);
-      imageUrl = `/uploads/${filename}`; // Database mein save karne ke liye URL
+    if (!file) {
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    // 3. Slug generate karein
+    // 1. File ko Buffer mein convert karein
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    // 2. Folder ensure karein (public/uploads)
+    const uploadDir = path.join(process.cwd(), "public/uploads");
+    try {
+      await mkdir(uploadDir, { recursive: true });
+    } catch (e) {
+      // Folder pehle se mojood hai
+    }
+
+    // 3. Unique File Name banayein
+    const filename = `${Date.now()}-${file.name.replace(/\s+/g, "-")}`;
+    const filePath = path.join(uploadDir, filename);
+    
+    // 4. File save karein
+    await writeFile(filePath, buffer);
+    const imageUrl = `/uploads/${filename}`;
+
+    // 5. CHECK: Kya ye Editor Image hai ya Main Cover?
+    if (!title) {
+      // Editor Image Case: Sirf URL return karein taake editor mein pic lag jaye
+      return NextResponse.json({ url: imageUrl });
+    }
+
+    // 6. Main Cover Image Case: Slug generate karein
     const slug = title
       .toLowerCase()
       .trim()
@@ -37,21 +46,11 @@ export async function POST(req: Request) {
       .replace(/[\s_-]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-    // 4. Prisma mein data save karein
-    const post = await prisma.post.create({
-      data: { 
-        title, 
-        slug, 
-        content, 
-        image: imageUrl, // Ab yahan URL save hoga
-        category, 
-        isTraining 
-      },
-    });
+    // Sirf URL aur Slug wapas bhejein, Database ka kaam /api/blog/route.ts karega
+    return NextResponse.json({ url: imageUrl, slug });
 
-    return NextResponse.json(post, { status: 201 });
   } catch (error) {
-    console.error("Error saving post:", error);
-    return NextResponse.json({ error: "Creation failed" }, { status: 500 });
+    console.error("Upload error:", error);
+    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }
