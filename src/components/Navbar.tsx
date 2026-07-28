@@ -33,7 +33,7 @@ export default function Navbar() {
     { name: 'Management', href: '#management' },
     { name: 'Projects', href: '#projects' },
     { name: 'Reviews', href: '#testimonials' },
-    { name: "Research", href: "/blog", isSpecial: true }, 
+    
   ];
 
   return (
