@@ -10,7 +10,7 @@ export default function Navbar() {
   const navSchema = {
     "@context": "https://schema.org",
     "@type": "SiteNavigationElement",
-    "name": ["Home", "About", "Why Us", "Solutions", "Workflows", "Management", "Projects", "Reviews"],
+    "name": ["Home", "About", "Why Us", "Solutions", "Workflows", "Management", "Projects", "Reviews", "Research"],
     "url": [
       "https://sm-tech.com/",
       "https://sm-tech.com/#about",
@@ -19,7 +19,8 @@ export default function Navbar() {
       "https://sm-tech.com/#workflows",
       "https://sm-tech.com/#management",
       "https://sm-tech.com/#projects",
-      "https://sm-tech.com/#testimonials"
+      "https://sm-tech.com/#testimonials",
+      "https://sm-tech.com/blog"
     ]
   };
 
@@ -32,20 +33,21 @@ export default function Navbar() {
     { name: 'Management', href: '#management' },
     { name: 'Projects', href: '#projects' },
     { name: 'Reviews', href: '#testimonials' },
+    { name: "Research", href: "/blog", isSpecial: true }, 
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-100 bg-white/95 backdrop-blur-xl border-b border-black/5 transition-all duration-300">
+    <nav className="fixed top-0 w-full z-[100] bg-white/95 backdrop-blur-xl border-b border-black/5 transition-all duration-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(navSchema) }}
       />
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 h-20 md:h-24 flex items-center justify-between gap-1 sm:gap-2">
+      <div className="max-w-7xl mx-auto px-4 h-20 md:h-24 flex items-center justify-between gap-2 relative z-[110]">
         
         {/* --- LOGO SECTION --- */}
-        <Link href="/" className="flex items-center gap-1.5 md:gap-3 shrink-0" aria-label="SM Technology Home">
-          <div className="relative w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 p-0.75 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 animate-[spin_12s_linear_infinite] group">
+        <Link href="/" className="flex items-center gap-2 md:gap-3 shrink-0" aria-label="SM Technology Home">
+          <div className="relative w-10 h-10 md:w-12 md:h-12 p-0.75 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 animate-[spin_12s_linear_infinite] group">
               <div className="w-full h-full bg-[#020617] rounded-[9px] flex items-center justify-center overflow-hidden">
                 <Image 
                   src="/logo.png" 
@@ -58,16 +60,16 @@ export default function Navbar() {
               </div>
           </div>
           <div className="flex flex-col shrink-0">
-            <span className="font-black text-sm sm:text-base md:text-lg lg:text-xl tracking-tighter text-slate-900 leading-none">
+            <span className="font-black text-sm md:text-lg lg:text-xl tracking-tighter text-slate-900 leading-none">
               SM TECHNOLOGY
             </span>
-            <span className="text-[7px] sm:text-[8px] md:text-[10px] text-blue-600 font-bold tracking-[0.15em] uppercase mt-1">
+            <span className="text-[7px] md:text-[10px] text-blue-600 font-bold tracking-[0.15em] uppercase mt-1">
               AI Automation Agency
             </span>
           </div>
         </Link>
         
-        {/* --- MAIN NAVIGATION (Desktop View) --- */}
+        {/* --- DESKTOP NAVIGATION --- */}
         <div className="hidden lg:flex items-center flex-1 justify-center px-2" role="navigation">
           <div className="flex items-center gap-0.5 bg-black/5 p-1 rounded-full border border-black/5">
             {navLinks.map((link) => (
@@ -82,51 +84,50 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* --- RIGHT SIDE: AUDIT BUTTON & MOBILE HAMBURGER TOGGLE --- */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          
-          {/* Audit Button (Har screen par adjust ho kar nazar aayega) */}
+        {/* --- RIGHT SECTION (Audit Button & Mobile Toggle) --- */}
+        <div className="flex items-center gap-2 shrink-0">
           <Link 
             href="https://sm-omini-agent.vercel.app/"
             target="_blank"
-            className="group relative inline-flex items-center gap-1.5 sm:gap-3 px-3.5 sm:px-5 py-2.5 sm:py-3 overflow-hidden rounded-full bg-slate-950 font-black text-white transition-all duration-500 hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:shadow-blue-500/40"
+            className="group relative inline-flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2.5 md:py-3.5 overflow-hidden rounded-full bg-slate-950 font-black text-white transition-all duration-500 hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(37,99,235,0.2)]"
           >
-            <div className="absolute inset-0 p-[1.5px] rounded-full bg-gradient-to-r from-blue-600 via-cyan-400 to-blue-600 opacity-30 group-hover:opacity-100 group-hover:animate-[spin_3s_linear_infinite] transition-opacity"></div>
-            <div className="absolute inset-[1.5px] bg-[#020617] rounded-full z-0 transition-colors group-hover:bg-blue-950/20"></div>
-            <div className="relative z-10 flex items-center justify-center">
-              <Zap size={14} className="sm:w-4 sm:h-4 text-yellow-300 fill-yellow-300 group-hover:rotate-12 transition-transform duration-300" />
-            </div>
-            <span className="relative z-10 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.1em] sm:tracking-[0.15em] italic">
+            <div className="absolute inset-0 p-[1.5px] rounded-full bg-gradient-to-r from-blue-600 via-cyan-400 to-blue-600 opacity-30 group-hover:opacity-100 group-hover:animate-[spin_3s_linear_infinite]"></div>
+            <div className="absolute inset-[1.5px] bg-[#020617] rounded-full z-0"></div>
+            <Zap size={14} className="relative z-10 text-yellow-300 fill-yellow-300" />
+            <span className="relative z-10 text-[9px] md:text-[11px] font-black uppercase tracking-wider italic">
               AI AUDIT
             </span>
           </Link>
 
-          {/* Mobile Menu Hamburger Button */}
-          <button
+          <button 
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 rounded-xl bg-black/5 text-slate-900 hover:bg-black/10 transition-colors focus:outline-none"
-            aria-label="Toggle Navigation Menu"
+            className="lg:hidden p-2 text-slate-900 hover:bg-black/5 rounded-lg transition-colors relative z-[120]"
+            aria-label="Toggle Mobile Menu"
           >
-            {isOpen ? <X size={22} /> : <Menu size={22} />}
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
       </div>
 
-      {/* --- MOBILE DROPDOWN MENU --- */}
-      {isOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-2xl border-b border-black/10 shadow-xl px-6 py-6 flex flex-col gap-3 transition-all">
+      {/* --- MOBILE OVERLAY MENU --- */}
+      <div 
+        className={`fixed inset-0 bg-white z-[105] lg:hidden transition-all duration-500 ease-in-out ${
+          isOpen ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-full opacity-0 pointer-events-none'
+        }`}
+      >
+        <div className="flex flex-col items-center justify-center h-full gap-6 px-6 pt-20">
           {navLinks.map((link) => (
-            <Link
+            <Link 
               key={link.name}
-              href={link.href}
+              href={link.href} 
               onClick={() => setIsOpen(false)}
-              className="px-4 py-3 text-sm font-bold text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all uppercase tracking-tight"
+              className="text-xl md:text-2xl font-black text-slate-900 hover:text-blue-600 uppercase tracking-tighter transition-all hover:scale-110 active:scale-95"
             >
               {link.name}
             </Link>
           ))}
         </div>
-      )}
+      </div>
 
       <style jsx>{`
         @keyframes shimmer {

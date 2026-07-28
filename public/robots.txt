@@ -1,4 +1,13 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.smtechaisolutions.com/sitemap.xmlgit
+Sitemap: https://www.smtechaisolutions.com/sitemap.xmlgitUser-agent: *
+Allow: /
+# Admin aur Dashboard ko block karein taake private pages index na hon
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /login
+
+# Sitemap ka rasta (URL check kar lein ke 'www' hai ya nahi)
+Sitemap: https://www.smtechaisolutions.com/sitemap.xml
