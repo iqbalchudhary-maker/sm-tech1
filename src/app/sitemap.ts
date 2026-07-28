@@ -1,25 +1,33 @@
-import { prisma } from "@/lib/prisma";
 import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://www.smtechaisolutions.com";
-
-  // Blog posts fetch karein (Ensure posts exist in DB)
-  const posts = await prisma.post.findMany({
-    select: { slug: true, updatedAt: true },
-  });
-
-  const blogUrls = posts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: post.updatedAt,
-    priority: 0.8,
-  }));
+  const baseUrl = "https://sm-tech1.vercel.app"; // Apni live website ka URL yahan likh dein
 
   return [
-    { url: baseUrl, lastModified: new Date(), priority: 1.0 },
-    { url: `${baseUrl}/services`, lastModified: new Date(), priority: 0.9 },
-    { url: `${baseUrl}/projects`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/blog`, lastModified: new Date(), priority: 0.8 },
-    ...blogUrls,
+    {
+      url: baseUrl,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 1.0,
+    },
+    // Agar mazeed pages hain (jaise about, services, etc.) toh unhein yahan add kar sakte hain:
+    {
+      url: `${baseUrl}/#about`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/#services`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/#contact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
   ];
 }
